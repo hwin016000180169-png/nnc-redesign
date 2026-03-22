@@ -27,11 +27,15 @@
 
     .ceo-card {
       position: sticky;
-      top: 100px;
+      top: 88px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 20px;
       overflow: hidden;
+    }
+    @media(max-width: 768px) {
+      .ceo-card { position: static; }
+      .ceo-photo { aspect-ratio: 16/9; font-size: 56px; }
     }
     .ceo-photo {
       width: 100%;

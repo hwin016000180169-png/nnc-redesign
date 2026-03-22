@@ -66,6 +66,8 @@
     '#gnb{display:flex;align-items:center;height:100%;gap:0}',
     '.gnb-item{position:relative;height:100%;display:flex;align-items:center}',
     '.gnb-link{display:flex;align-items:center;height:100%;padding:0 18px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.75);white-space:nowrap;transition:color .2s;letter-spacing:-.01em}',
+    /* 데스크탑에서 아이콘/구조 숨김 */
+    '.gnb-icon{display:none}.gnb-link-left{display:contents}.gnb-footer{display:none}',
     '.gnb-link:hover,.gnb-link.active{color:#fff}',
     '.gnb-item::after{content:"";position:absolute;bottom:0;left:18px;right:18px;height:2px;background:var(--blue);transform:scaleX(0);transition:transform .3s var(--ease-out);border-radius:2px}',
     '.gnb-item:hover::after,.gnb-item.active-item::after{transform:scaleX(1)}',
@@ -142,19 +144,59 @@
       '#footer{padding:48px 20px 28px}',
       '#header{padding:0 16px}',
       '.logo-tagline{display:none}',
-      '#gnb{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(2,16,46,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);flex-direction:column;align-items:stretch;height:auto;max-height:calc(100vh - 68px);overflow-y:auto;padding:8px 0 20px;box-shadow:0 20px 40px rgba(0,0,0,0.6);z-index:899}',
+
+      /* 모바일에서 아이콘/footer 표시 */
+      '.gnb-icon{display:flex}.gnb-footer{display:block}',
+
+      /* ── 풀스크린 모바일 메뉴 ── */
+      '#gnb{display:none;position:fixed;top:68px;left:0;right:0;bottom:0;background:#020D25;flex-direction:column;height:calc(100vh - 68px);overflow-y:auto;z-index:899}',
       '#gnb.open{display:flex}',
-      '.gnb-item{height:auto;border-bottom:1px solid rgba(255,255,255,0.04)}.gnb-item:last-child{border-bottom:none}.gnb-item::after{display:none}',
-      '.gnb-link{padding:14px 20px;font-size:15px;height:auto;display:flex;justify-content:space-between;align-items:center}',
-      '.gnb-chevron{width:16px;height:16px;opacity:0.4;flex-shrink:0;transition:transform .25s}',
-      '.gnb-item.open>.gnb-link .gnb-chevron{transform:rotate(180deg);opacity:0.8}',
-      '.gnb-sub{position:static;transform:none!important;opacity:1;pointer-events:none;box-shadow:none;background:rgba(255,255,255,0.02);border:none;border-top:1px solid rgba(255,255,255,0.04);border-radius:0;margin:0;padding:4px 0 8px;display:none;min-width:0;width:100%}',
-      '.gnb-sub li a{padding:10px 20px 10px 36px;font-size:14px;border-radius:0;white-space:normal;word-break:keep-all}',
+
+      /* GNB 상단 카테고리 라벨 */
+      '.gnb-cat-label{padding:20px 24px 8px;font-size:10px;font-weight:800;letter-spacing:.16em;color:rgba(255,255,255,0.25);text-transform:uppercase;font-family:"Inter",sans-serif}',
+
+      /* GNB 아이템 */
+      '.gnb-item{height:auto;border-bottom:1px solid rgba(255,255,255,0.05)}.gnb-item:last-child{border-bottom:none}.gnb-item::after{display:none}',
+      '.gnb-link{padding:16px 24px;font-size:16px;font-weight:700;height:auto;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,0.85)}',
+      '.gnb-link:hover{color:#fff;background:rgba(255,255,255,0.04)}',
+      '.gnb-link-left{display:flex;align-items:center;gap:14px}',
+      '.gnb-icon{width:36px;height:36px;border-radius:10px;background:rgba(26,107,255,0.15);border:1px solid rgba(26,107,255,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}',
+      '.gnb-item.active-item .gnb-icon{background:rgba(26,107,255,0.3);border-color:rgba(26,107,255,0.5)}',
+      '.gnb-item.active-item>.gnb-link{color:#fff}',
+
+      /* Chevron */
+      '.gnb-chevron{width:16px;height:16px;opacity:0.3;flex-shrink:0;transition:transform .25s}',
+      '.gnb-item.open>.gnb-link .gnb-chevron{transform:rotate(180deg);opacity:0.7}',
+
+      /* 서브메뉴 */
+      '.gnb-sub{position:static;transform:none!important;opacity:1;pointer-events:none;box-shadow:none;background:rgba(255,255,255,0.02);border:none;border-top:1px solid rgba(255,255,255,0.04);border-radius:0;margin:0;padding:6px 0 10px;display:none;min-width:0;width:100%}',
+      '.gnb-sub li a{padding:11px 24px 11px 74px;font-size:14px;border-radius:0;white-space:normal;word-break:keep-all;color:rgba(255,255,255,0.55)}',
+      '.gnb-sub li a:hover{color:#fff;background:rgba(26,107,255,0.08)}',
+      '.gnb-sub li a.current{color:var(--accent);font-weight:700}',
       '.gnb-item.open .gnb-sub{display:block;pointer-events:auto}',
+
+      /* 구분선 */
+      '.gnb-divider{height:1px;background:rgba(255,255,255,0.06);margin:8px 0}',
+
+      /* 하단 액션바 */
+      '.gnb-footer{margin-top:auto;padding:20px 24px 32px;border-top:1px solid rgba(255,255,255,0.08);background:#020D25}',
+      '.gnb-footer-tel{display:flex;align-items:center;gap:10px;margin-bottom:14px}',
+      '.gnb-tel-icon{width:36px;height:36px;border-radius:10px;background:rgba(26,107,255,0.15);display:flex;align-items:center;justify-content:center}',
+      '.gnb-tel-icon svg{width:16px;height:16px;color:var(--accent)}',
+      '.gnb-tel-label{font-size:10px;color:rgba(255,255,255,0.3);font-family:"Inter",sans-serif;letter-spacing:.06em;margin-bottom:2px}',
+      '.gnb-tel-num{font-size:20px;font-weight:900;color:#fff;font-family:"Inter",sans-serif;letter-spacing:-.03em}',
+      '.gnb-footer-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}',
+      '.gnb-footer-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;border-radius:12px;font-size:14px;font-weight:700;transition:opacity .2s}',
+      '.gnb-footer-btn.primary{background:var(--blue);color:#fff}',
+      '.gnb-footer-btn.ghost{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.8)}',
+      '.gnb-footer-btn:hover{opacity:.85}',
+
+      /* 햄버거 애니메이션 */
       '.nav-toggle{display:flex}',
       '.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}',
       '.nav-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0)}',
       '.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}',
+
       '.ft-top{grid-template-columns:1fr}.ft-cs{text-align:left}.ft-cs-tel{font-size:28px}',
       '.ft-bottom{flex-wrap:wrap}',
     '}',
@@ -191,14 +233,20 @@
     var sv = _('service');
     var ct = _('contact');
     var cs = _('cs');
+    var br = _('branch');
+    var ir = _('ir');
 
     return '<header id="header">' +
       '<div class="logo-wrap"><a href="' + ROOT + 'index.html">' +
         '<img src="https://nncplus.com/data/banner/kVzlbyX61qZbVH7nwPME2RQAMYGuMr.png" alt="엔앤씨" class="logo-img"></a>' +
         '<span class="logo-tagline">SANITATION INFRA</span></div>' +
       '<nav id="gnb">' +
+
+        /* ── 데스크탑 & 모바일 공통 메뉴 아이템 ── */
         '<div class="gnb-item ' + co.sec + '">' +
-          '<a href="' + ROOT + 'company/overview.html" class="gnb-link ' + co.lnk + '">회사소개</a>' +
+          '<a href="' + ROOT + 'company/overview.html" class="gnb-link ' + co.lnk + '">' +
+            '<span class="gnb-link-left"><span class="gnb-icon">🏢</span>회사소개</span>' +
+          '</a>' +
           '<ul class="gnb-sub">' +
             '<li><a href="' + ROOT + 'company/overview.html" class="' + co.sub('overview') + '">회사개요</a></li>' +
             '<li><a href="' + ROOT + 'company/greeting.html" class="' + co.sub('greeting') + '">대표인사말</a></li>' +
@@ -210,31 +258,63 @@
           '</ul>' +
         '</div>' +
         '<div class="gnb-item ' + sv.sec + '">' +
-          '<a href="' + ROOT + 'payment.html" class="gnb-link ' + sv.lnk + '">서비스 신청</a>' +
+          '<a href="' + ROOT + 'payment.html" class="gnb-link ' + sv.lnk + '">' +
+            '<span class="gnb-link-left"><span class="gnb-icon">💳</span>서비스 신청</span>' +
+          '</a>' +
           '<ul class="gnb-sub wide">' +
             '<li><a href="' + ROOT + 'payment.html" class="' + sv.sub('payment') + '">온라인 결제 신청</a></li>' +
-            '<li><a href="https://nncplus.com/company/serviceKid1.php">키즈식판렌탈 및 세척구독서비스</a></li>' +
-            '<li><a href="javascript:void(0)" class="coming">성인식판렌탈 및 세척서비스</a></li>' +
-            '<li><a href="javascript:void(0)" class="coming">다회용기렌탈 및 세척서비스</a></li>' +
+            '<li><a href="https://nncplus.com/company/serviceKid1.php">키즈식판렌탈 서비스</a></li>' +
+            '<li><a href="javascript:void(0)" class="coming">성인식판렌탈 서비스</a></li>' +
+            '<li><a href="javascript:void(0)" class="coming">다회용기렌탈 서비스</a></li>' +
           '</ul>' +
         '</div>' +
         '<div class="gnb-item ' + ct.sec + '">' +
-          '<a class="gnb-link ' + ct.lnk + '">서비스 문의 및 안내</a>' +
+          '<a href="' + ROOT + 'contact/inquiry.html" class="gnb-link ' + ct.lnk + '">' +
+            '<span class="gnb-link-left"><span class="gnb-icon">💬</span>서비스 문의</span>' +
+          '</a>' +
           '<ul class="gnb-sub">' +
-            '<li><a href="https://nncplus.com/bbs/list.php?boardid=47">교육기관</a></li>' +
-            '<li><a href="https://nncplus.com/bbs/list.php?boardid=51">학부모안내</a></li>' +
+            '<li><a href="' + ROOT + 'contact/inquiry.html" class="' + ct.sub('inquiry') + '">교육기관 문의</a></li>' +
+            '<li><a href="' + ROOT + 'contact/parents.html" class="' + ct.sub('parents') + '">학부모 안내</a></li>' +
           '</ul>' +
         '</div>' +
         '<div class="gnb-item ' + cs.sec + '">' +
-          '<a href="https://nncplus.com/bbs/list.php?boardid=44" class="gnb-link ' + cs.lnk + '">고객센터</a>' +
+          '<a href="' + ROOT + 'cs/notice.html" class="gnb-link ' + cs.lnk + '">' +
+            '<span class="gnb-link-left"><span class="gnb-icon">📋</span>고객센터</span>' +
+          '</a>' +
           '<ul class="gnb-sub">' +
-            '<li><a href="https://nncplus.com/bbs/list.php?boardid=44">공지사항</a></li>' +
-            '<li><a href="https://nncplus.com/bbs/list.php?boardid=42">소식</a></li>' +
-            '<li><a href="https://nncplus.com/bbs/faq.php?faqcate=1">자주묻는 질문</a></li>' +
+            '<li><a href="' + ROOT + 'cs/notice.html" class="' + cs.sub('notice') + '">공지사항</a></li>' +
+            '<li><a href="' + ROOT + 'cs/news.html" class="' + cs.sub('news') + '">소식</a></li>' +
+            '<li><a href="' + ROOT + 'cs/faq.html" class="' + cs.sub('faq') + '">자주묻는 질문</a></li>' +
           '</ul>' +
         '</div>' +
-        '<div class="gnb-item"><a href="javascript:void(0)" class="gnb-link">지점</a></div>' +
-        '<div class="gnb-item"><a href="https://nncplus.com/bbs/list.php?boardid=43" class="gnb-link">IR</a></div>' +
+        '<div class="gnb-item ' + br.sec + '">' +
+          '<a href="' + ROOT + 'branch.html" class="gnb-link ' + br.lnk + '">' +
+            '<span class="gnb-link-left"><span class="gnb-icon">📍</span>지점</span>' +
+          '</a>' +
+        '</div>' +
+        '<div class="gnb-item ' + ir.sec + '">' +
+          '<a href="' + ROOT + 'ir.html" class="gnb-link ' + ir.lnk + '">' +
+            '<span class="gnb-link-left"><span class="gnb-icon">📊</span>IR</span>' +
+          '</a>' +
+        '</div>' +
+
+        /* ── 모바일 전용 하단 액션바 ── */
+        '<div class="gnb-footer">' +
+          '<div class="gnb-footer-tel">' +
+            '<div class="gnb-tel-icon">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.1-1.1a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
+            '</div>' +
+            '<div>' +
+              '<div class="gnb-tel-label">CS CENTER</div>' +
+              '<div class="gnb-tel-num">1522-6308</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="gnb-footer-btns">' +
+            '<a href="tel:15226308" class="gnb-footer-btn ghost">📞 전화 상담</a>' +
+            '<a href="' + ROOT + 'payment.html" class="gnb-footer-btn primary">결제 신청 →</a>' +
+          '</div>' +
+        '</div>' +
+
       '</nav>' +
       '<button class="nav-toggle" id="navToggle" aria-label="메뉴">' +
         '<span></span><span></span><span></span></button>' +
@@ -253,6 +333,8 @@
           '<a href="' + ROOT + 'index.html">HOME</a>' +
           '<span class="sep">/</span>' +
           (SEC === 'company' ? '<a href="' + ROOT + 'company/overview.html">회사소개</a><span class="sep">/</span>' : '') +
+          (SEC === 'cs' ? '<a href="' + ROOT + 'cs/notice.html">고객센터</a><span class="sep">/</span>' : '') +
+          (SEC === 'contact' ? '<a href="' + ROOT + 'contact/inquiry.html">서비스 문의</a><span class="sep">/</span>' : '') +
           '<span class="cur">' + crumb + '</span>' +
         '</div>' +
         '<div class="page-eyebrow">' + eyebrow + '</div>' +
@@ -269,8 +351,8 @@
         '<nav class="ft-nav">' +
           '<a href="https://nncplus.com/bbs/provision.php">이용약관</a>' +
           '<a href="https://nncplus.com/bbs/policy.php" class="hl">개인정보처리방침</a>' +
-          '<a href="https://nncplus.com/bbs/list.php?boardid=44">공지사항</a>' +
-          '<a href="https://nncplus.com/bbs/faq.php?faqcate=1">자주묻는 질문</a>' +
+          '<a href="' + ROOT + 'cs/notice.html">공지사항</a>' +
+          '<a href="' + ROOT + 'cs/faq.html">자주묻는 질문</a>' +
         '</nav>' +
         '<div class="ft-info">' +
           '<p>주식회사 엔앤씨(N&amp;C) &nbsp;|&nbsp; 대표자. 소지선 &nbsp;|&nbsp; 주소. 경기도 용인시 처인구 모현읍 독점로 152, 1층</p>' +

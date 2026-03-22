@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'cs', activePage: 'notice',
+      crumb: '공지사항', pageEyebrow: 'Notice',
+      pageTitle: '공지<span class="hl">사항</span>',
+      pageDesc: '엔앤씨의 중요 공지 및 업데이트를 확인하세요'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    .notice-filter {
+      display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 8px 18px; border-radius: 100px;
+      font-size: 13px; font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.5);
+      transition: all .2s; cursor: pointer; background: none;
+    }
+    .filter-btn.active,
+    .filter-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    .notice-list { display: flex; flex-direction: column; gap: 0; }
+    .notice-item {
+      display: flex; align-items: center; gap: 20px;
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background .15s; cursor: pointer;
+    }
+    .notice-item:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+    .notice-item:hover { background: rgba(26,107,255,0.06); }
+
+    .notice-badge {
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; flex-shrink: 0;
+      font-family: var(--font-en); letter-spacing: .04em;
+    }
+    .badge-notice { background: rgba(26,107,255,0.15); color: var(--blue); border: 1px solid rgba(26,107,255,0.25); }
+    .badge-update { background: rgba(56,191,255,0.12); color: var(--accent); border: 1px solid rgba(56,191,255,0.25); }
+    .badge-event  { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+
+    .notice-title {
+      flex: 1; font-size: 15px; font-weight: 500;
+      color: rgba(255,255,255,0.8); line-height: 1.5;
+    }
+    .notice-item:hover .notice-title { color: #fff; }
+    .notice-meta {
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 4px; flex-shrink: 0;
+    }
+    .notice-date { font-size: 12px; color: rgba(255,255,255,0.3); font-family: var(--font-en); }
+    .notice-views { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+    .notice-pin {
+      background: rgba(26,107,255,0.08);
+      border-left: 3px solid var(--blue);
+    }
+    .notice-pin .notice-title { font-weight: 700; color: #fff; }
+
+    .pagination {
+      display: flex; justify-content: center; align-items: center;
+      gap: 6px; margin-top: 40px;
+    }
+    .page-btn {
+      width: 36px; height: 36px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4);
+      transition: all .2s; cursor: pointer; background: none;
+    }
+    .page-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .page-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+
+    .empty-notice {
+      text-align: center; padding: 80px 20px;
+      color: rgba(255,255,255,0.25); font-size: 15px;
+    }
+    .empty-notice .empty-icon { font-size: 48px; margin-bottom: 16px; }
+
+    @media(max-width:768px) {
+      .notice-item { padding: 16px; gap: 12px; flex-wrap: wrap; }
+      .notice-meta { align-items: flex-start; flex-direction: row; gap: 8px; }
+      .notice-views { display: none; }
+    }
+  </style>
+</head>
+<body>
+<main id="page-main">
+
+  <div class="notice-filter">
+    <button class="filter-btn active">전체</button>
+    <button class="filter-btn">공지</button>
+    <button class="filter-btn">업데이트</button>
+    <button class="filter-btn">이벤트</button>
+  </div>
+
+  <div class="notice-list">
+
+    <!-- 고정 공지 -->
+    <div class="notice-item notice-pin" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">
+      <span class="notice-badge badge-notice">공지</span>
+      <div class="notice-title">📌 깔끄미 말끄미 서비스 이용약관 및 개인정보처리방침 안내</div>
+      <div class="notice-meta">
+        <span class="notice-date">2024.12.01</span>
+        <span class="notice-views">조회 1,204</span>
+      </div>
+    </div>
+
+    <div class="notice-item notice-pin" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">
+      <span class="notice-badge badge-notice">공지</span>
+      <div class="notice-title">📌 에스크로 서비스 가입 안내 — 안전한 결제 보호</div>
+      <div class="notice-meta">
+        <span class="notice-date">2024.11.15</span>
+        <span class="notice-views">조회 876</span>
+      </div>
+    </div>
+
+    <!-- 일반 공지 -->
+    <div class="notice-item" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">
+      <span class="notice-badge badge-update">업데이트</span>
+      <div class="notice-title">홈페이지 리뉴얼 오픈 — 온라인 결제 시스템 도입</div>
+      <div class="notice-meta">
+        <span class="notice-date">2025.03.01</span>
+        <span class="notice-views">조회 542</span>
+      </div>
+    </div>
+
+    <div class="notice-item" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">
+      <span class="notice-badge badge-notice">공지</span>
+      <div class="notice-title">2025년 봄학기 서비스 신청 안내 (어린이집·유치원)</div>
+      <div class="notice-meta">
+        <span class="notice-date">2025.02.10</span>
+        <span class="notice-views">조회 389</span>
+      </div>
+    </div>
+
+    <div class="notice-item" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">
+      <span class="notice-badge badge-event">이벤트</span>
+      <div class="notice-title">신규 계약 교육기관 대상 첫 달 무료 이벤트</div>
+      <div class="notice-meta">
+        <span class="notice-date">2025.01.20</span>
+        <span class="notice-views">조회 721</span>
+      </div>
+    </div>
+
+    <div class="notice-item" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">
+      <span class="notice-badge badge-notice">공지</span>
+      <div class="notice-title">설 연휴 기간 수거·배송 일정 안내 (2025년 1월 27일~30일)</div>
+      <div class="notice-meta">
+        <span class="notice-date">2025.01.15</span>
+        <span class="notice-views">조회 298</span>
+      </div>
+    </div>
+
+    <div class="notice-item" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">
+      <span class="notice-badge badge-update">업데이트</span>
+      <div class="notice-title">계약 교육기관 30개 돌파 — 감사 인사 및 서비스 향상 계획</div>
+      <div class="notice-meta">
+        <span class="notice-date">2025.01.05</span>
+        <span class="notice-views">조회 412</span>
+      </div>
+    </div>
+
+    <div class="notice-item" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">
+      <span class="notice-badge badge-notice">공지</span>
+      <div class="notice-title">안성시 지자체 협약 체결 완료 — 학부모 식판 세척 비용 전액 지원</div>
+      <div class="notice-meta">
+        <span class="notice-date">2024.04.20</span>
+        <span class="notice-views">조회 934</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pagination">
+    <button class="page-btn active">1</button>
+    <button class="page-btn" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">2</button>
+    <button class="page-btn" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">3</button>
+    <button class="page-btn" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=44'">›</button>
+  </div>
+
+</main>
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
