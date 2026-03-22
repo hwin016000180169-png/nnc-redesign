@@ -153,9 +153,11 @@
       /* GNB 상단 카테고리 라벨 */
       '.gnb-cat-label{padding:20px 24px 8px;font-size:10px;font-weight:800;letter-spacing:.16em;color:rgba(255,255,255,0.25);text-transform:uppercase;font-family:"Inter",sans-serif}',
 
+      /* GNB 아이템 래퍼 */
+      '.gnb-items{flex:1;display:flex;flex-direction:column;overflow-y:auto}',
       /* GNB 아이템 */
-      '.gnb-item{height:auto;border-bottom:1px solid rgba(255,255,255,0.05)}.gnb-item:last-child{border-bottom:none}.gnb-item::after{display:none}',
-      '.gnb-link{padding:16px 24px;font-size:clamp(14px,4vw,16px);font-weight:700;height:auto;display:flex;justify-content:center;align-items:center;position:relative;color:rgba(255,255,255,0.85)}',
+      '.gnb-item{flex:1;min-height:52px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column;justify-content:center}.gnb-item:last-child{border-bottom:none}.gnb-item::after{display:none}',
+      '.gnb-link{padding:0 24px;font-size:clamp(14px,4vw,16px);font-weight:700;flex:1;min-height:52px;display:flex;justify-content:center;align-items:center;position:relative;color:rgba(255,255,255,0.85)}',
       '.gnb-link:hover{color:#fff;background:rgba(255,255,255,0.04)}',
       '.gnb-item.active-item>.gnb-link{color:#fff}',
 
@@ -174,7 +176,7 @@
       '.gnb-divider{height:1px;background:rgba(255,255,255,0.06);margin:8px 0}',
 
       /* 하단 액션바 */
-      '.gnb-footer{margin-top:auto;padding:20px 24px 32px;border-top:1px solid rgba(255,255,255,0.08);background:#020D25}',
+      '.gnb-footer{padding:20px 24px 32px;border-top:1px solid rgba(255,255,255,0.08);background:#020D25}',
       '.gnb-footer-tel{display:flex;align-items:center;gap:10px;margin-bottom:14px}',
       '.gnb-tel-icon{width:36px;height:36px;border-radius:10px;background:rgba(26,107,255,0.15);display:flex;align-items:center;justify-content:center}',
       '.gnb-tel-icon svg{width:16px;height:16px;color:var(--accent)}',
@@ -239,6 +241,7 @@
         '<img src="https://nncplus.com/data/banner/kVzlbyX61qZbVH7nwPME2RQAMYGuMr.png" alt="엔앤씨" class="logo-img"></a>' +
         '<span class="logo-tagline">SANITATION INFRA</span></div>' +
       '<nav id="gnb">' +
+        '<div class="gnb-items">' +
 
         /* ── 메뉴 아이템 (index.html 동일 구조) ── */
         '<div class="gnb-item ' + co.sec + '">' +
@@ -283,6 +286,7 @@
         '<div class="gnb-item ' + ir.sec + '">' +
           '<a href="' + ROOT + 'ir.html" class="gnb-link ' + ir.lnk + '">IR</a>' +
         '</div>' +
+        '</div>' + /* /gnb-items */
 
         /* ── 모바일 전용 하단 액션바 ── */
         '<div class="gnb-footer">' +

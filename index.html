@@ -1315,7 +1315,7 @@
         z-index: 899;
       }
       #gnb.open { display: flex; }
-      .gnb-footer { display: block; margin-top: auto; padding: 20px 24px 32px; border-top: 1px solid rgba(255,255,255,0.08); background: #020D25; }
+      .gnb-footer { display: block; padding: 20px 24px 32px; border-top: 1px solid rgba(255,255,255,0.08); background: #020D25; }
       .gnb-footer-tel { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
       .gnb-tel-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(26,107,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
       .gnb-tel-icon svg { width: 16px; height: 16px; color: var(--accent); }
@@ -1326,10 +1326,11 @@
       .gnb-footer-btn.primary { background: var(--blue); color: #fff; }
       .gnb-footer-btn.ghost { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
       .gnb-footer-btn:hover { opacity: .85; }
-      .gnb-item { height: auto; border-bottom: 1px solid rgba(255,255,255,0.04); }
+      .gnb-items { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+      .gnb-item { flex: 1; min-height: 52px; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; justify-content: center; }
       .gnb-item:last-child { border-bottom: none; }
       .gnb-item::after { display: none; }
-      .gnb-link { padding: 14px 20px; font-size: clamp(14px,4vw,15px); height: auto; display: flex; justify-content: center; align-items: center; position: relative; }
+      .gnb-link { padding: 0 20px; font-size: clamp(14px,4vw,15px); flex: 1; min-height: 52px; display: flex; justify-content: center; align-items: center; position: relative; }
       .gnb-chevron { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; opacity: 0.4; transition: transform 0.3s, opacity 0.3s; }
       .gnb-item.open > .gnb-link .gnb-chevron { transform: translateY(-50%) rotate(180deg); opacity: 0.8; }
       .gnb-sub { position: static; transform: none !important; opacity: 1; pointer-events: none; box-shadow: none; background: rgba(255,255,255,0.02); border: none; border-radius: 0; margin: 0; padding: 0; min-width: 0; width: 100%; max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1); }
@@ -1400,6 +1401,7 @@
   </div>
 
   <nav id="gnb">
+    <div class="gnb-items">
     <div class="gnb-item">
       <a href="company/overview.html" class="gnb-link">회사소개</a>
       <ul class="gnb-sub">
@@ -1442,6 +1444,7 @@
     <div class="gnb-item">
       <a href="ir.html" class="gnb-link">IR</a>
     </div>
+    </div><!-- /gnb-items -->
 
     <!-- 모바일 전용 하단 액션바 -->
     <div class="gnb-footer">
