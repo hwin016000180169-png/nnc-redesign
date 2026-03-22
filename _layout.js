@@ -154,10 +154,10 @@
       '.gnb-cat-label{padding:20px 24px 8px;font-size:10px;font-weight:800;letter-spacing:.16em;color:rgba(255,255,255,0.25);text-transform:uppercase;font-family:"Inter",sans-serif}',
 
       /* GNB 아이템 래퍼 */
-      '.gnb-items{flex:1;display:flex;flex-direction:column;overflow-y:auto}',
+      '.gnb-items{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;overflow-y:auto}',
       /* GNB 아이템 */
-      '.gnb-item{flex:1;min-height:52px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column;justify-content:center}.gnb-item:last-child{border-bottom:none}.gnb-item::after{display:none}',
-      '.gnb-link{padding:0 24px;font-size:clamp(14px,4vw,16px);font-weight:700;flex:1;min-height:52px;display:flex;justify-content:center;align-items:center;position:relative;color:rgba(255,255,255,0.85)}',
+      '.gnb-item{border-bottom:1px solid rgba(255,255,255,0.05)}.gnb-item:last-child{border-bottom:none}.gnb-item::after{display:none}',
+      '.gnb-link{padding:16px 24px;font-size:clamp(14px,4vw,16px);font-weight:700;display:flex;justify-content:center;align-items:center;position:relative;color:rgba(255,255,255,0.85)}',
       '.gnb-link:hover{color:#fff;background:rgba(255,255,255,0.04)}',
       '.gnb-item.active-item>.gnb-link{color:#fff}',
 
