@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="엔앤씨 식판렌탈 및 세척구독서비스 신청 및 결제">
+  <title>서비스 신청 & 결제 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- PortOne V2 SDK -->
+  <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <style>
+    /* ══════════════════════════════════════
+       SHARED — index.html 동일 변수/리셋
+    ══════════════════════════════════════ */
+    :root {
+      --blue:      #1A6BFF;
+      --blue-deep: #0040D0;
+      --blue-dark: #02102E;
+      --blue-mid:  #041A40;
+      --blue-glow: rgba(26,107,255,0.35);
+      --blue-pale: #E8F1FF;
+      --accent:    #38BFFF;
+      --white:     #FFFFFF;
+      --text:      #0A1628;
+      --muted:     #6B7A99;
+      --border:    rgba(26,107,255,0.15);
+      --glass:     rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+      --green:     #22C55E;
+      --red:       #EF4444;
+      --font-ko: 'Noto Sans KR', sans-serif;
+      --font-en: 'Inter', sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-ko);
+      background: var(--blue-dark);
+      color: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    input, select { font-family: inherit; }
+
+    /* ── Canvas ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* ── Cursor glow ── */
+    #cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,107,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+    }
+
+    /* ══════════════════════════════════════
+       TOP BAR — index.html 동일
+    ══════════════════════════════════════ */
+    #topbar {
+      position: relative;
+      z-index: 1000;
+      background: rgba(2,16,46,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 40px;
+    }
+    .topbar-links { display: flex; gap: 0; }
+    .topbar-links a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      height: 40px;
+      padding: 0 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      border-left: 1px solid var(--glass-border);
+      transition: color 0.2s, background 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .topbar-links a:hover { color: #fff; background: var(--glass); }
+    .topbar-links .tb-mall { color: #7EC8FF; }
+    .topbar-links .tb-edu { color: #fff; background: var(--blue); font-weight: 700; }
+    .topbar-links .tb-edu:hover { background: var(--blue-deep); }
+    .topbar-links .tb-pay {
+      color: #fff;
+      background: linear-gradient(135deg, #1A6BFF, #38BFFF);
+      font-weight: 800;
+    }
+    .topbar-links .tb-pay:hover { opacity: 0.9; }
+
+    /* ══════════════════════════════════════
+       HEADER & GNB — index.html 동일
+    ══════════════════════════════════════ */
+    #header {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(2,16,46,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: background 0.4s, box-shadow 0.4s;
+    }
+    #header.solid {
+      background: rgba(2,16,46,0.98);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 12px; }
+    .logo-img { height: 34px; width: auto; filter: brightness(0) invert(1); }
+    .logo-tagline {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      font-family: var(--font-en);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      border-left: 1px solid rgba(255,255,255,0.15);
+      padding-left: 12px;
+    }
+    #gnb { display: flex; align-items: center; height: 100%; gap: 0; }
+    .gnb-item { position: relative; height: 100%; display: flex; align-items: center; }
+    .gnb-link {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.75);
+      white-space: nowrap;
+      transition: color 0.2s;
+      letter-spacing: -0.01em;
+    }
+    .gnb-link:hover { color: #fff; }
+    .gnb-link.active { color: #fff; }
+    .gnb-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 18px; right: 18px;
+      height: 2px;
+      background: var(--blue);
+      transform: scaleX(0);
+      transition: transform 0.3s var(--ease-out);
+      border-radius: 2px;
+    }
+    .gnb-item:hover::after { transform: scaleX(1); }
+    .gnb-item.active-item::after { transform: scaleX(1); }
+    .gnb-sub {
+      position: absolute;
+      top: calc(100% + 1px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      min-width: 190px;
+      background: rgba(4,26,64,0.97);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s var(--ease-out);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(26,107,255,0.15);
+      z-index: 200;
+    }
+    .gnb-sub.wide { min-width: 240px; }
+    .gnb-sub li a {
+      display: block;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .gnb-sub li a:hover { color: #fff; background: rgba(26,107,255,0.25); }
+    .gnb-sub li a.coming { color: rgba(255,255,255,0.3); pointer-events: none; }
+    .gnb-sub li a.coming::after { content: ' (준비중)'; font-size: 11px; }
+    .gnb-sub li a.current { color: var(--accent); font-weight: 700; }
+    .gnb-item:hover .gnb-sub,
+    .gnb-item:focus-within .gnb-sub { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+
+    /* ══════════════════════════════════════
+       PAGE BANNER
+    ══════════════════════════════════════ */
+    #page-banner {
+      position: relative;
+      z-index: 1;
+      padding: 64px 40px 52px;
+      border-bottom: 1px solid var(--glass-border);
+      overflow: hidden;
+    }
+    .page-banner-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .page-banner-blob-1 {
+      width: 500px; height: 500px;
+      background: rgba(26,107,255,0.12);
+      top: -200px; left: -100px;
+    }
+    .page-banner-blob-2 {
+      width: 300px; height: 300px;
+      background: rgba(56,191,255,0.08);
+      top: -100px; right: 200px;
+    }
+    .page-banner-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+    .page-crumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      font-family: var(--font-en);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .page-crumb a { color: rgba(255,255,255,0.35); transition: color 0.2s; }
+    .page-crumb a:hover { color: rgba(255,255,255,0.7); }
+    .page-crumb .sep { opacity: 0.4; }
+    .page-crumb .current-crumb { color: var(--accent); }
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-en);
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .page-eyebrow::before, .page-eyebrow::after {
+      content: ''; display: block; width: 20px; height: 1px;
+      background: var(--accent); opacity: 0.5;
+    }
+    .page-title {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .page-title .hl {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-desc { font-size: 15px; color: rgba(255,255,255,0.45); }
+
+    /* ══════════════════════════════════════
+       MAIN LAYOUT
+    ══════════════════════════════════════ */
+    #pay-main {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 60px 40px 100px;
+    }
+
+    /* ── Tab ── */
+    .tab-wrap { display: flex; justify-content: center; margin-bottom: 52px; }
+    .tab-group {
+      display: flex;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .tab-btn {
+      padding: 11px 32px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      transition: all 0.25s var(--ease-out);
+    }
+    .tab-btn.active { background: var(--blue); color: #fff; box-shadow: 0 4px 16px rgba(26,107,255,0.35); }
+
+    .plan-section { display: none; }
+    .plan-section.active { display: block; }
+
+    /* ── Subscription Plan Grid ── */
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .plan-card {
+      position: relative;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: 22px;
+      padding: 34px 30px;
+      cursor: pointer;
+      transition: border-color 0.25s, transform 0.25s var(--ease-out), box-shadow 0.25s;
+      overflow: hidden;
+    }
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26,107,255,0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    .plan-card:hover,
+    .plan-card.selected {
+      border-color: var(--blue);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 56px rgba(26,107,255,0.22);
+    }
+    .plan-card.selected::before { opacity: 1; }
+    .plan-card.featured { border-color: rgba(26,107,255,0.4); }
+
+    .plan-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-en);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .badge-basic    { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+    .badge-popular  { background: linear-gradient(135deg, var(--blue), var(--accent)); color: #fff; }
+    .badge-premium  { background: rgba(56,191,255,0.15); color: var(--accent); border: 1px solid rgba(56,191,255,0.3); }
+
+    .plan-name { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
+    .plan-desc { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.65; margin-bottom: 26px; }
+    .plan-price { display: flex; align-items: flex-end; gap: 4px; margin-bottom: 26px; }
+    .price-amount { font-size: 38px; font-weight: 900; font-family: var(--font-en); line-height: 1; }
+    .price-unit { font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 5px; }
+    .plan-divider { height: 1px; background: var(--glass-border); margin-bottom: 22px; }
+    .plan-features { display: flex; flex-direction: column; gap: 11px; margin-bottom: 30px; }
+    .plan-feat { display: flex; align-items: center; gap: 9px; font-size: 13px; color: rgba(255,255,255,0.7); }
+    .plan-feat svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+
+    .plan-select-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 11px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: all 0.2s;
+      letter-spacing: -0.01em;
+    }
+    .plan-select-btn.outline {
+      border: 1.5px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+    }
+    .plan-select-btn.outline:hover { border-color: var(--blue); color: #fff; background: rgba(26,107,255,0.1); }
+    .plan-select-btn.primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(26,107,255,0.4);
+    }
+    .plan-select-btn.primary:hover { background: var(--blue-deep); }
+
+    .plan-check {
+      position: absolute;
+      top: 22px; right: 22px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--blue);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 14px rgba(26,107,255,0.5);
+    }
+    .plan-check svg { width: 14px; height: 14px; }
+    .plan-card.selected .plan-check { display: flex; }
+
+    /* ── One-time Grid ── */
+    .onetime-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .onetime-card {
+      position: relative;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: 22px;
+      padding: 34px 30px;
+      cursor: pointer;
+      transition: border-color 0.25s, transform 0.25s var(--ease-out), box-shadow 0.25s;
+    }
+    .onetime-card:hover,
+    .onetime-card.selected {
+      border-color: var(--blue);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 56px rgba(26,107,255,0.22);
+    }
+    .onetime-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: rgba(26,107,255,0.12);
+      border: 1px solid rgba(26,107,255,0.22);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .onetime-icon svg { width: 26px; height: 26px; color: var(--accent); }
+    .onetime-name { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    .onetime-desc { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.65; margin-bottom: 22px; }
+    .onetime-price { font-size: 32px; font-weight: 900; font-family: var(--font-en); margin-bottom: 22px; }
+    .onetime-price span { font-size: 14px; font-family: var(--font-ko); font-weight: 500; color: rgba(255,255,255,0.45); }
+    .onetime-check {
+      position: absolute;
+      top: 22px; right: 22px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--blue);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .onetime-check svg { width: 14px; height: 14px; }
+    .onetime-card.selected .onetime-check { display: flex; }
+
+    /* ══════════════════════════════════════
+       CHECKOUT MODAL
+    ══════════════════════════════════════ */
+    #checkout-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,10,30,0.88);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #checkout-overlay.open { display: flex; }
+
+    #checkout-modal {
+      background: #061530;
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 38px 38px 44px;
+      position: relative;
+      box-shadow: 0 32px 96px rgba(0,0,0,0.7);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.12); }
+    .modal-close svg { width: 16px; height: 16px; }
+
+    .modal-plan-summary {
+      background: rgba(26,107,255,0.1);
+      border: 1px solid rgba(26,107,255,0.22);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-plan-name { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .modal-plan-interval { font-size: 12px; color: rgba(255,255,255,0.38); }
+    .modal-plan-price { font-size: 20px; font-weight: 900; font-family: var(--font-en); color: var(--accent); }
+
+    .form-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.02em; }
+    .form-grid { display: grid; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
+    .form-label .req { color: var(--blue); margin-left: 2px; }
+    .form-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: #fff;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-input::placeholder { color: rgba(255,255,255,0.18); }
+    .form-input:focus { border-color: var(--blue); background: rgba(26,107,255,0.08); }
+
+    .agree-wrap { display: flex; align-items: flex-start; gap: 10px; padding: 14px 0 0; }
+    .agree-check {
+      width: 18px; height: 18px;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      appearance: none;
+      margin-top: 1px;
+      transition: all 0.2s;
+    }
+    .agree-check:checked {
+      background: var(--blue);
+      border-color: var(--blue);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 8l4 4 6-6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: 12px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .agree-text { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.55; }
+    .agree-text a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .pay-cta {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--blue), #2980FF);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-top: 26px;
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 28px rgba(26,107,255,0.45);
+    }
+    .pay-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+    .pay-cta:disabled { opacity: 0.38; cursor: not-allowed; transform: none; }
+    .pay-cta svg { width: 18px; height: 18px; }
+    .pay-sub-note { font-size: 12px; color: rgba(255,255,255,0.3); text-align: center; margin-top: 10px; line-height: 1.55; }
+    .secure-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+    .secure-note svg { width: 13px; height: 13px; }
+
+    /* ══════════════════════════════════════
+       LOADING
+    ══════════════════════════════════════ */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,10,30,0.93);
+      z-index: 3000;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    #loading-overlay.open { display: flex; }
+    .spinner {
+      width: 52px; height: 52px;
+      border: 3px solid rgba(26,107,255,0.2);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 15px; color: rgba(255,255,255,0.55); font-weight: 500; }
+
+    /* ══════════════════════════════════════
+       RESULT SCREEN
+    ══════════════════════════════════════ */
+    #result-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--blue-dark);
+      z-index: 4000;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    #result-screen.open { display: flex; }
+    .result-icon {
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 26px;
+    }
+    .result-icon.success { background: rgba(34,197,94,0.12); border: 2px solid rgba(34,197,94,0.28); }
+    .result-icon.error   { background: rgba(239,68,68,0.12);  border: 2px solid rgba(239,68,68,0.28); }
+    .result-icon svg { width: 40px; height: 40px; }
+    .result-icon.success svg { color: var(--green); }
+    .result-icon.error svg   { color: var(--red); }
+    .result-title { font-size: 30px; font-weight: 900; margin-bottom: 12px; letter-spacing: -0.03em; }
+    .result-desc  { font-size: 15px; color: rgba(255,255,255,0.48); line-height: 1.75; margin-bottom: 12px; max-width: 420px; }
+    .result-id    { font-size: 12px; color: rgba(255,255,255,0.22); font-family: var(--font-en); margin-bottom: 38px; }
+    .result-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .result-btn { padding: 13px 30px; border-radius: 10px; font-size: 14px; font-weight: 700; transition: all 0.2s; }
+    .result-btn.primary { background: var(--blue); color: #fff; box-shadow: 0 4px 16px rgba(26,107,255,0.35); }
+    .result-btn.ghost   { border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.55); }
+    .result-btn:hover { opacity: 0.85; }
+
+    /* ══════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════ */
+    #toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(30,40,70,0.97);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 12px 22px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s var(--ease-out);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #toast.toast-error { border-color: rgba(239,68,68,0.4); color: #fca5a5; }
+
+    /* ══════════════════════════════════════
+       FOOTER — index.html 동일
+    ══════════════════════════════════════ */
+    #footer {
+      position: relative;
+      z-index: 1;
+      background: #020B1A;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 60px 40px 36px;
+    }
+    .ft-inner { max-width: 1200px; margin: 0 auto; }
+    .ft-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      padding-bottom: 44px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ft-logo { font-family: var(--font-en); font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.03em; margin-bottom: 22px; }
+    .ft-logo span { color: var(--blue); }
+    .ft-nav { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 22px; }
+    .ft-nav a {
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.45);
+      padding: 0 16px; border-right: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.15s; line-height: 1;
+    }
+    .ft-nav a:first-child { padding-left: 0; }
+    .ft-nav a:hover { color: rgba(255,255,255,0.9); }
+    .ft-nav a.hl { color: #60A5FA; font-weight: 700; }
+    .ft-info p { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 2.2; }
+    .ft-info a { color: rgba(255,255,255,0.4); transition: color 0.15s; }
+    .ft-info a:hover { color: rgba(255,255,255,0.8); }
+    .ft-cs { text-align: right; }
+    .ft-cs-label { font-family: var(--font-en); font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; margin-bottom: 10px; }
+    .ft-cs-tel { font-family: var(--font-en); font-size: 38px; font-weight: 900; color: #fff; letter-spacing: -0.04em; margin-bottom: 12px; }
+    .ft-cs-hours { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 2; }
+    .ft-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; gap: 16px; }
+    .ft-copy { font-size: 12px; color: rgba(255,255,255,0.2); font-family: var(--font-en); }
+    .ft-escrow {
+      font-size: 11px; color: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 5px 14px; border-radius: 100px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .ft-escrow:hover { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.25); }
+
+    /* ══════════════════════════════════════
+       SIDE NAV — index.html 동일
+    ══════════════════════════════════════ */
+    #side-svc {
+      position: fixed;
+      right: 0; top: 50%;
+      transform: translateY(-50%);
+      z-index: 800;
+      display: flex;
+      flex-direction: column;
+    }
+    .side-item {
+      width: 60px; padding: 14px 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 5px;
+      background: rgba(4,26,64,0.95);
+      backdrop-filter: blur(12px);
+      border-left: 3px solid var(--blue);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+      transition: width 0.3s var(--ease-out), background 0.2s;
+      overflow: hidden;
+    }
+    .side-item:first-child { border-radius: 12px 0 0 0; }
+    .side-item:last-child { border-bottom: none; }
+    .side-item:hover { background: var(--blue); width: 68px; }
+    .side-item.coming { border-left-color: rgba(255,255,255,0.15); opacity: 0.5; cursor: default; }
+    .side-item.coming:hover { background: rgba(4,26,64,0.95); width: 60px; }
+    .side-icon { font-size: 18px; }
+    .side-txt { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.4; letter-spacing: 0.01em; }
+    .side-item:hover .side-txt { color: #fff; }
+    #btn-top {
+      width: 60px; height: 48px;
+      background: rgba(26,107,255,0.9);
+      backdrop-filter: blur(12px);
+      border-left: 3px solid #0040D0;
+      border-radius: 0 0 0 12px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 3px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    #btn-top:hover { background: var(--blue-deep); }
+    #btn-top svg { width: 16px; height: 16px; color: #fff; }
+    #btn-top span { font-size: 8px; font-weight: 800; color: #fff; font-family: var(--font-en); letter-spacing: 0.1em; }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .plan-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      #side-svc { display: none; }
+      #pay-main { padding: 48px 20px 80px; }
+      #page-banner { padding: 48px 20px 40px; }
+      #footer { padding: 48px 20px 28px; }
+      #topbar { padding-right: 16px; }
+      #header { padding: 0 20px; }
+      #gnb {
+        display: none;
+        position: fixed;
+        top: calc(40px + 68px);
+        left: 0; right: 0;
+        background: rgba(2,16,46,0.98);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+        padding: 12px 0 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      }
+      #gnb.open { display: flex; }
+      .gnb-item { height: auto; }
+      .gnb-item::after { display: none; }
+      .gnb-link { padding: 13px 24px; }
+      .gnb-sub {
+        position: static; transform: none !important; opacity: 1; pointer-events: none;
+        box-shadow: none; background: rgba(26,107,255,0.05); border: none;
+        border-radius: 0; margin-left: 40px; display: none;
+      }
+      .gnb-item.open .gnb-sub { display: block; pointer-events: auto; }
+      .nav-toggle { display: flex; }
+      .plan-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .onetime-grid { grid-template-columns: 1fr; }
+      .ft-top { grid-template-columns: 1fr; }
+      .ft-cs { text-align: left; }
+      .ft-cs-tel { font-size: 28px; }
+      #checkout-modal { padding: 28px 22px 32px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .topbar-links a { padding: 0 10px; font-size: 11px; }
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+  </style>
+</head>
+
+<body>
+
+<!-- Cursor glow -->
+<div id="cursor-glow"></div>
+
+<!-- Particle canvas -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- ═══ TOP BAR ═══ -->
+<div id="topbar">
+  <div class="topbar-links">
+    <a href="https://nncplus.com/bbs/login.php?url=%2F">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      로그인
+    </a>
+    <a href="http://nncmall.co.kr" target="_blank" class="tb-mall">학부모몰</a>
+    <a href="http://nncmall.com" target="_blank" class="tb-edu">교육기관몰 →</a>
+    <a href="payment.html" class="tb-pay">결제하기 →</a>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<header id="header">
+  <div class="logo-wrap">
+    <a href="index.html">
+      <img src="https://nncplus.com/data/banner/kVzlbyX61qZbVH7nwPME2RQAMYGuMr.png" alt="엔앤씨" class="logo-img">
+    </a>
+    <span class="logo-tagline">SANITATION INFRA</span>
+  </div>
+
+  <nav id="gnb">
+    <div class="gnb-item">
+      <a href="https://nncplus.com/company/overview.php" class="gnb-link">회사소개</a>
+      <ul class="gnb-sub">
+        <li><a href="https://nncplus.com/company/overview.php">회사개요</a></li>
+        <li><a href="https://nncplus.com/company/greeting.php">대표인사말</a></li>
+        <li><a href="https://nncplus.com/company/history.php">연혁</a></li>
+        <li><a href="https://nncplus.com/company/business.php">사업영역</a></li>
+        <li><a href="https://nncplus.com/company/certification.php">특허 및 인증현황</a></li>
+        <li><a href="https://nncplus.com/company/organization.php">조직도</a></li>
+        <li><a href="https://nncplus.com/company/location.php">오시는 길</a></li>
+      </ul>
+    </div>
+    <div class="gnb-item active-item">
+      <a href="payment.html" class="gnb-link active">서비스 신청</a>
+      <ul class="gnb-sub wide">
+        <li><a href="payment.html" class="current">온라인 결제 신청</a></li>
+        <li><a href="https://nncplus.com/company/serviceKid1.php">키즈식판렌탈 및 세척구독서비스</a></li>
+        <li><a href="javascript:void(0)" class="coming">성인식판렌탈 및 세척서비스</a></li>
+        <li><a href="javascript:void(0)" class="coming">다회용기렌탈 및 세척서비스</a></li>
+      </ul>
+    </div>
+    <div class="gnb-item">
+      <a class="gnb-link">서비스 문의 및 안내</a>
+      <ul class="gnb-sub">
+        <li><a href="https://nncplus.com/bbs/list.php?boardid=47">교육기관</a></li>
+        <li><a href="https://nncplus.com/bbs/list.php?boardid=51">학부모안내</a></li>
+      </ul>
+    </div>
+    <div class="gnb-item">
+      <a href="https://nncplus.com/bbs/list.php?boardid=44" class="gnb-link">고객센터</a>
+      <ul class="gnb-sub">
+        <li><a href="https://nncplus.com/bbs/list.php?boardid=44">공지사항</a></li>
+        <li><a href="https://nncplus.com/bbs/list.php?boardid=42">소식</a></li>
+        <li><a href="https://nncplus.com/bbs/faq.php?faqcate=1">자주묻는 질문</a></li>
+      </ul>
+    </div>
+    <div class="gnb-item">
+      <a href="javascript:void(0)" class="gnb-link">지점</a>
+    </div>
+    <div class="gnb-item">
+      <a href="https://nncplus.com/bbs/list.php?boardid=43" class="gnb-link">IR</a>
+    </div>
+  </nav>
+
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ═══ PAGE BANNER ═══ -->
+<section id="page-banner">
+  <div class="page-banner-blob page-banner-blob-1"></div>
+  <div class="page-banner-blob page-banner-blob-2"></div>
+  <div class="page-banner-inner">
+    <div class="page-crumb">
+      <a href="index.html">HOME</a>
+      <span class="sep">/</span>
+      <span class="current-crumb">SERVICE PAYMENT</span>
+    </div>
+    <div class="page-eyebrow">Service &amp; Payment</div>
+    <h1 class="page-title">서비스 신청 &amp; <span class="hl">결제</span></h1>
+    <p class="page-desc">원하시는 플랜을 선택하고 간편하게 신청 및 결제하세요</p>
+  </div>
+</section>
+
+<!-- ═══ MAIN ═══ -->
+<main id="pay-main">
+
+  <!-- Tab -->
+  <div class="tab-wrap">
+    <div class="tab-group">
+      <button class="tab-btn active" data-tab="subscription">구독 서비스</button>
+      <button class="tab-btn" data-tab="onetime">단건 결제</button>
+    </div>
+  </div>
+
+  <!-- ── 구독 서비스 ── -->
+  <div class="plan-section active" id="section-subscription">
+    <div class="plan-grid">
+
+      <!-- 베이직 -->
+      <div class="plan-card" data-plan="sub-basic">
+        <div class="plan-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div class="plan-badge badge-basic">Basic</div>
+        <h3 class="plan-name">베이직</h3>
+        <p class="plan-desc">소규모 어린이집 · 가정 어린이집에 최적화된 입문 플랜</p>
+        <div class="plan-price">
+          <span class="price-amount">49,000</span>
+          <span class="price-unit">원/월</span>
+        </div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>식판 최대 10개</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>주 2회 수거 · 배송</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>전문 고온 세척</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>월별 위생 리포트</li>
+        </ul>
+        <button class="plan-select-btn outline" onclick="selectPlan('sub-basic')">이 플랜 선택</button>
+      </div>
+
+      <!-- 스탠다드 (인기) -->
+      <div class="plan-card featured" data-plan="sub-standard">
+        <div class="plan-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div class="plan-badge badge-popular">Most Popular</div>
+        <h3 class="plan-name">스탠다드</h3>
+        <p class="plan-desc">일반 어린이집 · 유치원에 가장 많이 선택하는 인기 플랜</p>
+        <div class="plan-price">
+          <span class="price-amount">89,000</span>
+          <span class="price-unit">원/월</span>
+        </div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>식판 최대 20개</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>주 3회 수거 · 배송</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>전문 고온 세척 + 소독</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>주간 위생 리포트</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>제휴몰 할인 혜택</li>
+        </ul>
+        <button class="plan-select-btn primary" onclick="selectPlan('sub-standard')">이 플랜 선택</button>
+      </div>
+
+      <!-- 프리미엄 -->
+      <div class="plan-card" data-plan="sub-premium">
+        <div class="plan-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div class="plan-badge badge-premium">Premium</div>
+        <h3 class="plan-name">프리미엄</h3>
+        <p class="plan-desc">대형 기관 · 초등학교를 위한 올인클루시브 프리미엄 플랜</p>
+        <div class="plan-price">
+          <span class="price-amount">149,000</span>
+          <span class="price-unit">원/월</span>
+        </div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>식판 무제한</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>주 5회 수거 · 배송</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>고온 세척 + UV 소독</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>실시간 위생 리포트</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>전담 매니저 배정</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>제휴몰 VIP 할인</li>
+        </ul>
+        <button class="plan-select-btn outline" onclick="selectPlan('sub-premium')">이 플랜 선택</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 단건 결제 ── -->
+  <div class="plan-section" id="section-onetime">
+    <div class="onetime-grid">
+
+      <div class="onetime-card" data-plan="ot-wash">
+        <div class="onetime-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div class="onetime-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h3 class="onetime-name">방문 세척 서비스</h3>
+        <p class="onetime-desc">전문 세척 팀이 직접 방문하여 식판 및 식기를 현장에서 세척합니다.</p>
+        <div class="onetime-price">50,000<span>원</span></div>
+        <button class="plan-select-btn outline" onclick="selectPlan('ot-wash')">신청하기</button>
+      </div>
+
+      <div class="onetime-card" data-plan="ot-premium-wash">
+        <div class="onetime-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div class="onetime-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="onetime-name">프리미엄 세척 패키지</h3>
+        <p class="onetime-desc">고온 세척 + UV 소독 + 건조까지 완벽한 위생 관리 패키지입니다.</p>
+        <div class="onetime-price">120,000<span>원</span></div>
+        <button class="plan-select-btn primary" onclick="selectPlan('ot-premium-wash')">신청하기</button>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="footer">
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div>
+        <div class="ft-logo">N<span>&</span>C</div>
+        <nav class="ft-nav">
+          <a href="https://nncplus.com/bbs/provision.php">이용약관</a>
+          <a href="https://nncplus.com/bbs/policy.php" class="hl">개인정보처리방침</a>
+          <a href="https://nncplus.com/bbs/list.php?boardid=44">공지사항</a>
+          <a href="https://nncplus.com/bbs/faq.php?faqcate=1">자주묻는 질문</a>
+        </nav>
+        <div class="ft-info">
+          <p>주식회사 엔앤씨(N&amp;C) &nbsp;|&nbsp; 대표자. 소지선 &nbsp;|&nbsp; 주소. 경기도 용인시 처인구 모현읍 독점로 152, 1층</p>
+          <p>통신판매업신고. 제2024-용인처인-3143호 &nbsp;|&nbsp; 사업자등록번호. 894-81-03435</p>
+          <p>팩스. 031-8056-9890 &nbsp;|&nbsp; 이메일. nncplus@naver.com</p>
+        </div>
+      </div>
+      <div class="ft-cs">
+        <div class="ft-cs-label">CS Center</div>
+        <div class="ft-cs-tel">1522-6308</div>
+        <div class="ft-cs-hours">
+          <p>상담 오전 09시 ~ 오후 18시 (토/일, 공휴일 휴무)</p>
+          <p>점심 오후 12시 ~ 오후 13시</p>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p class="ft-copy">Copyright ⓒ N&C Inc. All rights reserved.</p>
+      <a href="javascript:void(0)" class="ft-escrow">에스크로 가입 사실 확인</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Quick sidebar -->
+<aside id="side-svc">
+  <a href="payment.html" class="side-item">
+    <div class="side-icon">💳</div>
+    <div class="side-txt">온라인<br>결제신청</div>
+  </a>
+  <span class="side-item coming" onclick="alert('준비중 입니다.');">
+    <div class="side-icon">🍽</div>
+    <div class="side-txt">성인식판<br>렌탈신청</div>
+  </span>
+  <span class="side-item coming" onclick="alert('준비중 입니다.');">
+    <div class="side-icon">♻️</div>
+    <div class="side-txt">다회용기<br>렌탈신청</div>
+  </span>
+  <button id="btn-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+    <span>TOP</span>
+  </button>
+</aside>
+
+<!-- ═══ CHECKOUT MODAL ═══ -->
+<div id="checkout-overlay">
+  <div id="checkout-modal">
+    <button class="modal-close" onclick="closeCheckout()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-plan-summary">
+      <div>
+        <div class="modal-plan-name" id="modal-plan-name">—</div>
+        <div class="modal-plan-interval" id="modal-plan-interval">—</div>
+      </div>
+      <div class="modal-plan-price" id="modal-plan-price">—</div>
+    </div>
+    <div class="form-title">신청자 정보 입력</div>
+    <form id="checkout-form" onsubmit="handlePayment(event)">
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">이름<span class="req">*</span></label>
+            <input class="form-input" type="text" id="f-name" placeholder="홍길동" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">연락처<span class="req">*</span></label>
+            <input class="form-input" type="tel" id="f-phone" placeholder="010-1234-5678" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일<span class="req">*</span></label>
+          <input class="form-input" type="email" id="f-email" placeholder="example@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">기관명</label>
+          <input class="form-input" type="text" id="f-org" placeholder="○○어린이집 / ○○유치원 (선택)">
+        </div>
+        <div class="agree-wrap">
+          <input type="checkbox" class="agree-check" id="f-agree" required>
+          <label class="agree-text" for="f-agree">
+            <a href="https://nncplus.com/bbs/policy.php" target="_blank">개인정보 수집 · 이용</a> 및
+            <a href="https://nncplus.com/bbs/provision.php" target="_blank">이용약관</a>에 동의합니다.<span style="color:var(--red)">*</span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="pay-cta" id="pay-cta-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span id="pay-cta-text">결제 진행하기</span>
+      </button>
+      <p class="pay-sub-note" id="pay-sub-note"></p>
+      <div class="secure-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        포트원(PortOne) 안전결제 · SSL 암호화 보호
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Loading -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <p class="loading-text" id="loading-text">결제를 처리하는 중입니다...</p>
+</div>
+
+<!-- Result -->
+<div id="result-screen">
+  <div class="result-icon" id="result-icon">
+    <svg id="result-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"></svg>
+  </div>
+  <h2 class="result-title" id="result-title"></h2>
+  <p class="result-desc" id="result-desc"></p>
+  <p class="result-id" id="result-id"></p>
+  <div class="result-actions">
+    <button class="result-btn primary" onclick="location.href='index.html'">홈으로</button>
+    <button class="result-btn ghost" id="result-retry-btn" onclick="retryPayment()" style="display:none">다시 시도</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     CONFIG — 실제 값으로 교체하세요
+     1. 포트원 콘솔 → 상점 ID / 채널 키
+     2. Supabase 대시보드 → Project Settings → API
+══════════════════════════════════════════════════════════ -->
+<script>
+  const CONFIG = {
+    portone: {
+      storeId:    'store-XXXXXXXX',       // ← 포트원 스토어 ID
+      channelKey: 'channel-key-XXXXXXXX'  // ← 포트원 채널 키
+    },
+    supabase: {
+      url:     'https://XXXXXXXX.supabase.co', // ← Supabase URL
+      anonKey: 'eyXXXXXXXX'                    // ← Supabase anon key
+    }
+  };
+</script>
+
+<script>
+/* ──────────────────────────────────────
+   Cursor glow
+──────────────────────────────────────── */
+const cursorGlow = document.getElementById('cursor-glow');
+document.addEventListener('mousemove', e => {
+  cursorGlow.style.left = e.clientX + 'px';
+  cursorGlow.style.top  = e.clientY + 'px';
+}, { passive: true });
+
+/* ──────────────────────────────────────
+   Particle canvas
+──────────────────────────────────────── */
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = document.body.scrollHeight;
+  }
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x     = Math.random() * W;
+      this.y     = Math.random() * H;
+      this.r     = Math.random() * 1.5 + 0.3;
+      this.vx    = (Math.random() - 0.5) * 0.3;
+      this.vy    = (Math.random() - 0.5) * 0.3;
+      this.alpha = Math.random() * 0.4 + 0.1;
+      this.color = Math.random() > 0.6 ? '#38BFFF' : '#1A6BFF';
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle  = this.color;
+      ctx.globalAlpha = this.alpha;
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    particles = [];
+    const count = Math.floor((W * H) / 15000);
+    for (let i = 0; i < Math.min(count, 120); i++) particles.push(new Particle());
+  }
+
+  function drawConnections() {
+    const maxDist = 120;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < maxDist) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle  = '#1A6BFF';
+          ctx.globalAlpha  = (1 - d / maxDist) * 0.12;
+          ctx.lineWidth    = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    drawConnections();
+    particles.forEach(p => { p.update(); p.draw(); });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+  resize();
+  initParticles();
+  animate();
+})();
+
+/* ──────────────────────────────────────
+   Header scroll
+──────────────────────────────────────── */
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('solid', window.scrollY > 30);
+}, { passive: true });
+
+/* ──────────────────────────────────────
+   Mobile nav
+──────────────────────────────────────── */
+const navToggle = document.getElementById('navToggle');
+const gnb       = document.getElementById('gnb');
+navToggle.addEventListener('click', () => gnb.classList.toggle('open'));
+if (window.innerWidth <= 768) {
+  document.querySelectorAll('.gnb-item').forEach(item => {
+    const link = item.querySelector('.gnb-link');
+    const sub  = item.querySelector('.gnb-sub');
+    if (sub) link.addEventListener('click', e => { e.preventDefault(); item.classList.toggle('open'); });
+  });
+}
+
+/* ──────────────────────────────────────
+   플랜 데이터
+──────────────────────────────────────── */
+const PLANS = {
+  'sub-basic':       { name: '베이직 구독',          amount: 49000,  interval: '월 자동결제', type: 'subscription' },
+  'sub-standard':    { name: '스탠다드 구독',        amount: 89000,  interval: '월 자동결제', type: 'subscription' },
+  'sub-premium':     { name: '프리미엄 구독',        amount: 149000, interval: '월 자동결제', type: 'subscription' },
+  'ot-wash':         { name: '방문 세척 서비스',     amount: 50000,  interval: '단건 결제',   type: 'onetime' },
+  'ot-premium-wash': { name: '프리미엄 세척 패키지', amount: 120000, interval: '단건 결제',   type: 'onetime' }
+};
+
+/* ──────────────────────────────────────
+   Supabase 클라이언트
+──────────────────────────────────────── */
+const supabase = window.supabase.createClient(CONFIG.supabase.url, CONFIG.supabase.anonKey);
+
+/* ──────────────────────────────────────
+   상태
+──────────────────────────────────────── */
+let selectedPlanId = null;
+
+/* ──────────────────────────────────────
+   탭 전환
+──────────────────────────────────────── */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.plan-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('section-' + btn.dataset.tab).classList.add('active');
+    clearSelection();
+  });
+});
+
+function clearSelection() {
+  document.querySelectorAll('.plan-card, .onetime-card').forEach(c => c.classList.remove('selected'));
+  selectedPlanId = null;
+}
+
+/* ──────────────────────────────────────
+   플랜 선택
+──────────────────────────────────────── */
+function selectPlan(planId) {
+  clearSelection();
+  selectedPlanId = planId;
+  const card = document.querySelector(`[data-plan="${planId}"]`);
+  if (card) card.classList.add('selected');
+
+  const plan = PLANS[planId];
+  if (!plan) return;
+
+  document.getElementById('modal-plan-name').textContent     = plan.name;
+  document.getElementById('modal-plan-interval').textContent = plan.interval;
+  document.getElementById('modal-plan-price').textContent    = plan.amount.toLocaleString() + '원';
+
+  const isSub = plan.type === 'subscription';
+  document.getElementById('pay-cta-text').textContent  = isSub ? '카드 등록 후 구독 시작' : '결제 진행하기';
+  document.getElementById('pay-sub-note').textContent  = isSub
+    ? '카드 등록 화면이 열립니다. 등록 즉시 첫 결제 후 매월 자동 청구됩니다.'
+    : '';
+
+  openCheckout();
+}
+
+/* ──────────────────────────────────────
+   모달
+──────────────────────────────────────── */
+function openCheckout() {
+  document.getElementById('checkout-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCheckout() {
+  document.getElementById('checkout-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('checkout-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeCheckout();
+});
+
+/* ──────────────────────────────────────
+   유틸
+──────────────────────────────────────── */
+function showLoading(msg = '결제를 처리하는 중입니다...') {
+  document.getElementById('loading-text').textContent = msg;
+  document.getElementById('loading-overlay').classList.add('open');
+}
+function hideLoading() {
+  document.getElementById('loading-overlay').classList.remove('open');
+}
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show' + (isError ? ' toast-error' : '');
+  setTimeout(() => { t.className = ''; }, 3000);
+}
+function showResult({ success, title, desc, refId, showRetry }) {
+  hideLoading();
+  closeCheckout();
+  const screen = document.getElementById('result-screen');
+  const icon   = document.getElementById('result-icon');
+  const svg    = document.getElementById('result-svg');
+  icon.className = 'result-icon ' + (success ? 'success' : 'error');
+  svg.innerHTML  = success
+    ? '<path d="M5 12l5 5L20 7"/>'
+    : '<path d="M18 6L6 18M6 6l12 12"/>';
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-desc').textContent  = desc;
+  document.getElementById('result-id').textContent    = refId ? '결제 ID: ' + refId : '';
+  document.getElementById('result-retry-btn').style.display = showRetry ? '' : 'none';
+  screen.classList.add('open');
+}
+function retryPayment() {
+  document.getElementById('result-screen').classList.remove('open');
+  openCheckout();
+}
+
+/* ──────────────────────────────────────
+   결제 처리
+──────────────────────────────────────── */
+async function handlePayment(e) {
+  e.preventDefault();
+  if (!selectedPlanId) { showToast('플랜이 선택되지 않았습니다.', true); return; }
+
+  const plan     = PLANS[selectedPlanId];
+  const customer = {
+    name:  document.getElementById('f-name').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    org:   document.getElementById('f-org').value.trim()
+  };
+  if (!customer.name || !customer.phone || !customer.email) {
+    showToast('필수 항목을 모두 입력해주세요.', true);
+    return;
+  }
+
+  const cta = document.getElementById('pay-cta-btn');
+  cta.disabled = true;
+  try {
+    if (plan.type === 'subscription') await handleSubscription(plan, customer);
+    else                              await handleOnetime(plan, customer);
+  } catch (err) {
+    console.error(err);
+    showResult({
+      success: false,
+      title: '결제 중 오류가 발생했습니다',
+      desc: err?.message || '잠시 후 다시 시도해주세요.',
+      showRetry: true
+    });
+  } finally {
+    cta.disabled = false;
+  }
+}
+
+/* 구독 — 빌링키 발급 */
+async function handleSubscription(plan, customer) {
+  const issueId = 'issue-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+  showLoading('카드 등록 화면을 불러오는 중...');
+
+  const res = await PortOne.requestIssueBillingKey({
+    storeId:          CONFIG.portone.storeId,
+    channelKey:       CONFIG.portone.channelKey,
+    billingKeyMethod: 'CARD',
+    issueId,
+    issueName:        `엔앤씨 ${plan.name} 카드 등록`,
+    customer: {
+      customerId:  'cust-' + Date.now(),
+      fullName:    customer.name,
+      phoneNumber: customer.phone,
+      email:       customer.email
+    }
+  });
+
+  if (res.code) {
+    hideLoading();
+    if (res.code !== 'PORTONE_USER_CANCEL')
+      showToast('카드 등록 실패: ' + (res.message || res.code), true);
+    return;
+  }
+
+  showLoading('구독을 등록하는 중...');
+  const { data, error } = await supabase.functions.invoke('issue-billing-key', {
+    body: { billingKey: res.billingKey, planId: selectedPlanId, customer: { ...customer, issueId } }
+  });
+
+  if (error || !data?.success) throw new Error(data?.message || error?.message || '구독 등록 실패');
+
+  showResult({
+    success: true,
+    title: '구독이 시작되었습니다!',
+    desc: `${plan.name} 플랜이 활성화되었습니다.\n매월 자동으로 결제되며 언제든지 해지할 수 있습니다.`,
+    refId: data.subscriptionId,
+    showRetry: false
+  });
+}
+
+/* 단건 결제 */
+async function handleOnetime(plan, customer) {
+  const paymentId = 'pay-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+  showLoading('결제 창을 불러오는 중...');
+
+  const res = await PortOne.requestPayment({
+    storeId:     CONFIG.portone.storeId,
+    channelKey:  CONFIG.portone.channelKey,
+    paymentId,
+    orderName:   plan.name,
+    totalAmount: plan.amount,
+    currency:    'KRW',
+    payMethod:   'CARD',
+    customer: { fullName: customer.name, phoneNumber: customer.phone, email: customer.email }
+  });
+
+  if (res.code) {
+    hideLoading();
+    if (res.code !== 'PORTONE_USER_CANCEL')
+      showToast('결제 실패: ' + (res.message || res.code), true);
+    return;
+  }
+
+  showLoading('결제를 검증하는 중...');
+  const { data, error } = await supabase.functions.invoke('verify-payment', {
+    body: { paymentId: res.paymentId, planId: selectedPlanId, customer }
+  });
+
+  if (error || !data?.success) throw new Error(data?.message || error?.message || '결제 검증 실패');
+
+  showResult({
+    success: true,
+    title: '결제가 완료되었습니다!',
+    desc: `${plan.name} 서비스 신청이 접수되었습니다.\n담당자가 영업일 기준 1일 이내에 연락드립니다.`,
+    refId: res.paymentId,
+    showRetry: false
+  });
+}
+</script>
+</body>
+</html>
