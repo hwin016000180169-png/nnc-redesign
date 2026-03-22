@@ -1307,20 +1307,25 @@
         display: none;
         position: fixed;
         top: 68px;
-        left: 0; right: 0;
-        background: rgba(2,16,46,0.98);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--glass-border);
+        left: 0; right: 0; bottom: 0;
+        background: #020D25;
         flex-direction: column;
-        align-items: stretch;
-        height: auto;
-        max-height: calc(100vh - 68px);
+        height: calc(100vh - 68px);
         overflow-y: auto;
-        padding: 8px 0 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         z-index: 899;
       }
       #gnb.open { display: flex; }
+      .gnb-footer { display: block; margin-top: auto; padding: 20px 24px 32px; border-top: 1px solid rgba(255,255,255,0.08); background: #020D25; }
+      .gnb-footer-tel { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+      .gnb-tel-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(26,107,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+      .gnb-tel-icon svg { width: 16px; height: 16px; color: var(--accent); }
+      .gnb-tel-label { font-size: 10px; color: rgba(255,255,255,0.3); font-family: var(--font-en); letter-spacing: .06em; margin-bottom: 2px; }
+      .gnb-tel-num { font-size: 20px; font-weight: 900; color: #fff; font-family: var(--font-en); letter-spacing: -.03em; }
+      .gnb-footer-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .gnb-footer-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 16px; border-radius: 12px; font-size: 14px; font-weight: 700; transition: opacity .2s; text-decoration: none; }
+      .gnb-footer-btn.primary { background: var(--blue); color: #fff; }
+      .gnb-footer-btn.ghost { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
+      .gnb-footer-btn:hover { opacity: .85; }
       .gnb-item { height: auto; border-bottom: 1px solid rgba(255,255,255,0.04); }
       .gnb-item:last-child { border-bottom: none; }
       .gnb-item::after { display: none; }
@@ -1417,25 +1422,42 @@
       </ul>
     </div>
     <div class="gnb-item">
-      <a class="gnb-link">서비스 문의 및 안내</a>
+      <a href="contact/inquiry.html" class="gnb-link">서비스 문의</a>
       <ul class="gnb-sub">
-        <li><a href="https://nncplus.com/bbs/list.php?boardid=47">교육기관</a></li>
-        <li><a href="https://nncplus.com/bbs/list.php?boardid=51">학부모안내</a></li>
+        <li><a href="contact/inquiry.html">교육기관 문의</a></li>
+        <li><a href="contact/parents.html">학부모 안내</a></li>
       </ul>
     </div>
     <div class="gnb-item">
-      <a href="https://nncplus.com/bbs/list.php?boardid=44" class="gnb-link">고객센터</a>
+      <a href="cs/notice.html" class="gnb-link">고객센터</a>
       <ul class="gnb-sub">
-        <li><a href="https://nncplus.com/bbs/list.php?boardid=44">공지사항</a></li>
-        <li><a href="https://nncplus.com/bbs/list.php?boardid=42">소식</a></li>
-        <li><a href="https://nncplus.com/bbs/faq.php?faqcate=1">자주묻는 질문</a></li>
+        <li><a href="cs/notice.html">공지사항</a></li>
+        <li><a href="cs/news.html">소식</a></li>
+        <li><a href="cs/faq.html">자주묻는 질문</a></li>
       </ul>
     </div>
     <div class="gnb-item">
-      <a href="javascript:alert('준비중 입니다.');" class="gnb-link">지점</a>
+      <a href="branch.html" class="gnb-link">지점</a>
     </div>
     <div class="gnb-item">
-      <a href="https://nncplus.com/bbs/list.php?boardid=43" class="gnb-link">IR</a>
+      <a href="ir.html" class="gnb-link">IR</a>
+    </div>
+
+    <!-- 모바일 전용 하단 액션바 -->
+    <div class="gnb-footer">
+      <div class="gnb-footer-tel">
+        <div class="gnb-tel-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.1-1.1a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="gnb-tel-label">CS CENTER</div>
+          <div class="gnb-tel-num">1522-6308</div>
+        </div>
+      </div>
+      <div class="gnb-footer-btns">
+        <a href="tel:15226308" class="gnb-footer-btn ghost">📞 전화 상담</a>
+        <a href="payment.html" class="gnb-footer-btn primary">결제 신청 →</a>
+      </div>
     </div>
   </nav>
 

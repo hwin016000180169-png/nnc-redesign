@@ -66,8 +66,7 @@
     '#gnb{display:flex;align-items:center;height:100%;gap:0}',
     '.gnb-item{position:relative;height:100%;display:flex;align-items:center}',
     '.gnb-link{display:flex;align-items:center;height:100%;padding:0 18px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.75);white-space:nowrap;transition:color .2s;letter-spacing:-.01em}',
-    /* 데스크탑에서 아이콘/구조 숨김 */
-    '.gnb-icon{display:none}.gnb-link-left{display:contents}.gnb-footer{display:none}',
+    '.gnb-footer{display:none}',
     '.gnb-link:hover,.gnb-link.active{color:#fff}',
     '.gnb-item::after{content:"";position:absolute;bottom:0;left:18px;right:18px;height:2px;background:var(--blue);transform:scaleX(0);transition:transform .3s var(--ease-out);border-radius:2px}',
     '.gnb-item:hover::after,.gnb-item.active-item::after{transform:scaleX(1)}',
@@ -145,8 +144,7 @@
       '#header{padding:0 16px}',
       '.logo-tagline{display:none}',
 
-      /* 모바일에서 아이콘/footer 표시 */
-      '.gnb-icon{display:flex}.gnb-footer{display:block}',
+      '.gnb-footer{display:block}',
 
       /* ── 풀스크린 모바일 메뉴 ── */
       '#gnb{display:none;position:fixed;top:68px;left:0;right:0;bottom:0;background:#020D25;flex-direction:column;height:calc(100vh - 68px);overflow-y:auto;z-index:899}',
@@ -159,9 +157,6 @@
       '.gnb-item{height:auto;border-bottom:1px solid rgba(255,255,255,0.05)}.gnb-item:last-child{border-bottom:none}.gnb-item::after{display:none}',
       '.gnb-link{padding:16px 24px;font-size:clamp(14px,4vw,16px);font-weight:700;height:auto;display:flex;justify-content:center;align-items:center;position:relative;color:rgba(255,255,255,0.85)}',
       '.gnb-link:hover{color:#fff;background:rgba(255,255,255,0.04)}',
-      '.gnb-link-left{display:flex;align-items:center;gap:14px}',
-      '.gnb-icon{width:36px;height:36px;border-radius:10px;background:rgba(26,107,255,0.15);border:1px solid rgba(26,107,255,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}',
-      '.gnb-item.active-item .gnb-icon{background:rgba(26,107,255,0.3);border-color:rgba(26,107,255,0.5)}',
       '.gnb-item.active-item>.gnb-link{color:#fff}',
 
       /* Chevron - absolutely positioned on right */
@@ -245,11 +240,9 @@
         '<span class="logo-tagline">SANITATION INFRA</span></div>' +
       '<nav id="gnb">' +
 
-        /* ── 데스크탑 & 모바일 공통 메뉴 아이템 ── */
+        /* ── 메뉴 아이템 (index.html 동일 구조) ── */
         '<div class="gnb-item ' + co.sec + '">' +
-          '<a href="' + ROOT + 'company/overview.html" class="gnb-link ' + co.lnk + '">' +
-            '<span class="gnb-link-left"><span class="gnb-icon">🏢</span>회사소개</span>' +
-          '</a>' +
+          '<a href="' + ROOT + 'company/overview.html" class="gnb-link ' + co.lnk + '">회사소개</a>' +
           '<ul class="gnb-sub">' +
             '<li><a href="' + ROOT + 'company/overview.html" class="' + co.sub('overview') + '">회사개요</a></li>' +
             '<li><a href="' + ROOT + 'company/greeting.html" class="' + co.sub('greeting') + '">대표인사말</a></li>' +
@@ -261,9 +254,7 @@
           '</ul>' +
         '</div>' +
         '<div class="gnb-item ' + sv.sec + '">' +
-          '<a href="' + ROOT + 'payment.html" class="gnb-link ' + sv.lnk + '">' +
-            '<span class="gnb-link-left"><span class="gnb-icon">💳</span>서비스 신청</span>' +
-          '</a>' +
+          '<a href="' + ROOT + 'payment.html" class="gnb-link ' + sv.lnk + '">서비스 신청</a>' +
           '<ul class="gnb-sub wide">' +
             '<li><a href="' + ROOT + 'payment.html" class="' + sv.sub('payment') + '">온라인 결제 신청</a></li>' +
             '<li><a href="https://nncplus.com/company/serviceKid1.php">키즈식판렌탈 서비스</a></li>' +
@@ -272,18 +263,14 @@
           '</ul>' +
         '</div>' +
         '<div class="gnb-item ' + ct.sec + '">' +
-          '<a href="' + ROOT + 'contact/inquiry.html" class="gnb-link ' + ct.lnk + '">' +
-            '<span class="gnb-link-left"><span class="gnb-icon">💬</span>서비스 문의</span>' +
-          '</a>' +
+          '<a href="' + ROOT + 'contact/inquiry.html" class="gnb-link ' + ct.lnk + '">서비스 문의</a>' +
           '<ul class="gnb-sub">' +
             '<li><a href="' + ROOT + 'contact/inquiry.html" class="' + ct.sub('inquiry') + '">교육기관 문의</a></li>' +
             '<li><a href="' + ROOT + 'contact/parents.html" class="' + ct.sub('parents') + '">학부모 안내</a></li>' +
           '</ul>' +
         '</div>' +
         '<div class="gnb-item ' + cs.sec + '">' +
-          '<a href="' + ROOT + 'cs/notice.html" class="gnb-link ' + cs.lnk + '">' +
-            '<span class="gnb-link-left"><span class="gnb-icon">📋</span>고객센터</span>' +
-          '</a>' +
+          '<a href="' + ROOT + 'cs/notice.html" class="gnb-link ' + cs.lnk + '">고객센터</a>' +
           '<ul class="gnb-sub">' +
             '<li><a href="' + ROOT + 'cs/notice.html" class="' + cs.sub('notice') + '">공지사항</a></li>' +
             '<li><a href="' + ROOT + 'cs/news.html" class="' + cs.sub('news') + '">소식</a></li>' +
@@ -291,14 +278,10 @@
           '</ul>' +
         '</div>' +
         '<div class="gnb-item ' + br.sec + '">' +
-          '<a href="' + ROOT + 'branch.html" class="gnb-link ' + br.lnk + '">' +
-            '<span class="gnb-link-left"><span class="gnb-icon">📍</span>지점</span>' +
-          '</a>' +
+          '<a href="' + ROOT + 'branch.html" class="gnb-link ' + br.lnk + '">지점</a>' +
         '</div>' +
         '<div class="gnb-item ' + ir.sec + '">' +
-          '<a href="' + ROOT + 'ir.html" class="gnb-link ' + ir.lnk + '">' +
-            '<span class="gnb-link-left"><span class="gnb-icon">📊</span>IR</span>' +
-          '</a>' +
+          '<a href="' + ROOT + 'ir.html" class="gnb-link ' + ir.lnk + '">IR</a>' +
         '</div>' +
 
         /* ── 모바일 전용 하단 액션바 ── */
