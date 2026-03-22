@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학부모 안내 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'contact', activePage: 'parents',
+      crumb: '학부모 안내', pageEyebrow: 'For Parents',
+      pageTitle: '학부모 <span class="hl">안내</span>',
+      pageDesc: '자녀의 식판 걱정, 엔앤씨가 해결해 드립니다'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    /* Hero banner */
+    .parents-hero {
+      background: linear-gradient(135deg, rgba(26,107,255,0.15) 0%, rgba(56,191,255,0.08) 100%);
+      border: 1px solid rgba(26,107,255,0.2);
+      border-radius: 24px;
+      padding: 48px 40px;
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    @media(max-width: 768px) { .parents-hero { padding: 36px 24px; margin-bottom: 48px; } }
+    .parents-hero-eyebrow {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      color: var(--accent); font-family: var(--font-en);
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .parents-hero-title {
+      font-size: clamp(24px, 4vw, 40px); font-weight: 900;
+      letter-spacing: -.03em; line-height: 1.25; margin-bottom: 16px;
+    }
+    .parents-hero-title .hl {
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .parents-hero-desc { font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 560px; margin: 0 auto 28px; word-break: keep-all; }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+      padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 8px;
+    }
+    .hero-stat-num { font-size: 28px; font-weight: 900; color: #fff; font-family: var(--font-en); }
+    .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+    /* How it works */
+    .section-eyebrow {
+      font-size: 12px; font-weight: 700; letter-spacing: .1em;
+      color: rgba(255,255,255,0.3); text-transform: uppercase;
+      font-family: var(--font-en); margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: clamp(20px, 2.5vw, 28px); font-weight: 800;
+      letter-spacing: -.03em; margin-bottom: 36px;
+    }
+
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 64px;
+    }
+    @media(max-width: 1024px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width: 480px)  { .steps-grid { grid-template-columns: 1fr; } }
+
+    .step-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 24px 20px;
+      position: relative; overflow: hidden;
+    }
+    .step-card::before {
+      content: attr(data-step);
+      position: absolute; top: -10px; right: 12px;
+      font-size: 72px; font-weight: 900; font-family: var(--font-en);
+      color: rgba(26,107,255,0.07); line-height: 1;
+    }
+    .step-icon { font-size: 32px; margin-bottom: 16px; }
+    .step-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .step-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+
+    /* Benefits */
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 64px;
+    }
+    @media(max-width: 1024px) { .benefits-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width: 640px)  { .benefits-grid { grid-template-columns: 1fr; } }
+
+    .benefit-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 28px 24px;
+      transition: border-color .2s, transform .2s;
+    }
+    .benefit-card:hover { border-color: rgba(26,107,255,0.25); transform: translateY(-3px); }
+    .benefit-icon {
+      width: 48px; height: 48px; border-radius: 14px; margin-bottom: 18px;
+      background: rgba(26,107,255,0.12); border: 1px solid rgba(26,107,255,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .benefit-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .benefit-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.75; }
+
+    /* Hygiene */
+    .hygiene-section {
+      background: rgba(26,107,255,0.05);
+      border: 1px solid rgba(26,107,255,0.15);
+      border-radius: 20px; padding: 40px; margin-bottom: 64px;
+    }
+    @media(max-width: 768px) { .hygiene-section { padding: 28px 20px; } }
+    .hygiene-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    @media(max-width: 768px) { .hygiene-grid { grid-template-columns: 1fr; gap: 28px; } }
+    .hygiene-steps { display: flex; flex-direction: column; gap: 14px; }
+    .hygiene-step {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .hygiene-step-num {
+      width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
+      background: rgba(26,107,255,0.2); border: 1px solid rgba(26,107,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800; color: var(--blue); font-family: var(--font-en);
+    }
+    .hygiene-step-text { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    .hygiene-step-text strong { color: rgba(255,255,255,0.9); font-weight: 700; }
+
+    .hygiene-visual {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .hygiene-stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 16px 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hygiene-stat-icon { font-size: 24px; }
+    .hygiene-stat-num { font-size: 22px; font-weight: 900; color: var(--accent); font-family: var(--font-en); }
+    .hygiene-stat-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+    /* CTA */
+    .parents-cta {
+      text-align: center; padding: 56px 24px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+    }
+    .parents-cta h2 { font-size: clamp(20px, 3vw, 28px); font-weight: 800; margin-bottom: 12px; }
+    .parents-cta p { font-size: 15px; color: rgba(255,255,255,0.45); margin-bottom: 28px; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 12px;
+      background: var(--blue); color: #fff; font-weight: 700; font-size: 15px;
+      border: none; cursor: pointer; transition: opacity .2s; text-decoration: none;
+    }
+    .btn-primary:hover { opacity: .85; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 12px;
+      background: none; color: rgba(255,255,255,0.7); font-weight: 600; font-size: 15px;
+      border: 1px solid rgba(255,255,255,0.15); cursor: pointer; transition: all .2s;
+      text-decoration: none;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+  </style>
+</head>
+<body>
+<main id="page-main">
+
+  <!-- Hero -->
+  <div class="parents-hero">
+    <div class="parents-hero-eyebrow">For Parents</div>
+    <h1 class="parents-hero-title">식판 걱정 없는<br><span class="hl">깨끗한 내일</span>을 드립니다</h1>
+    <p class="parents-hero-desc">
+      아이가 어린이집에서 쓴 식판을 집에서 직접 씻을 필요가 없습니다.<br>
+      엔앤씨가 수거하여 전문 시설에서 위생 처리 후 다시 돌려드립니다.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">0</div>
+        <div class="hero-stat-label">집에서 씻는 횟수</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">80°C+</div>
+        <div class="hero-stat-label">고온 세척 온도</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">30+</div>
+        <div class="hero-stat-label">계약 교육기관</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이용 흐름 -->
+  <div class="section-eyebrow">How It Works</div>
+  <div class="section-title">이렇게 이용하세요</div>
+  <div class="steps-grid">
+    <div class="step-card" data-step="1">
+      <div class="step-icon">🏫</div>
+      <div class="step-title">기관에 식판 맡기기</div>
+      <div class="step-desc">아이가 점심을 먹고 나면 선생님이 식판을 모아 보관합니다. 학부모는 아무것도 하지 않아도 됩니다.</div>
+    </div>
+    <div class="step-card" data-step="2">
+      <div class="step-icon">🚐</div>
+      <div class="step-title">엔앤씨가 수거</div>
+      <div class="step-desc">정해진 요일에 엔앤씨 담당자가 교육기관을 방문하여 식판을 수거해 갑니다.</div>
+    </div>
+    <div class="step-card" data-step="3">
+      <div class="step-icon">🧼</div>
+      <div class="step-title">전문 세척·소독</div>
+      <div class="step-desc">전문 설비에서 고온 세척과 열 소독을 완료합니다. 식약처 기준을 충족하는 친환경 세제를 사용합니다.</div>
+    </div>
+    <div class="step-card" data-step="4">
+      <div class="step-icon">✨</div>
+      <div class="step-title">깨끗하게 배송</div>
+      <div class="step-desc">세척 완료된 식판을 다음 날 오전까지 교육기관에 배송합니다. 아이는 항상 깨끗한 식판을 사용합니다.</div>
+    </div>
+  </div>
+
+  <!-- 혜택 -->
+  <div class="section-eyebrow">Benefits</div>
+  <div class="section-title">학부모님께 드리는 혜택</div>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon">🕐</div>
+      <div class="benefit-title">시간 절약</div>
+      <div class="benefit-desc">매일 반복되는 식판 세척에서 완전히 해방됩니다. 소중한 시간을 아이와 함께하세요.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">💰</div>
+      <div class="benefit-title">지자체 비용 지원</div>
+      <div class="benefit-desc">안성시 등 협약 지자체의 경우 세척 비용 전액을 지원받을 수 있어 학부모 부담이 없습니다.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🛡️</div>
+      <div class="benefit-title">위생 보장</div>
+      <div class="benefit-desc">가정에서 손으로 씻는 것보다 훨씬 높은 수준의 위생을 전문 설비로 보장합니다.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">👜</div>
+      <div class="benefit-title">가방 속 청결 유지</div>
+      <div class="benefit-desc">세척되지 않은 식판이 아이 가방에 들어가지 않습니다. 가방 속 위생을 지킵니다.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🌱</div>
+      <div class="benefit-title">친환경 세제 사용</div>
+      <div class="benefit-desc">아이 건강을 위해 식약처 기준 친환경 세제만을 사용합니다. 잔류 세제 걱정이 없습니다.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">📋</div>
+      <div class="benefit-title">정기 위생 점검</div>
+      <div class="benefit-desc">세척 후 세균 검사를 정기적으로 실시하여 위생 기준을 철저히 유지합니다.</div>
+    </div>
+  </div>
+
+  <!-- 세척 과정 -->
+  <div class="hygiene-section">
+    <div class="hygiene-grid">
+      <div>
+        <div class="section-eyebrow">Hygiene Process</div>
+        <div class="section-title" style="margin-bottom:24px">4단계 전문 위생 세척</div>
+        <div class="hygiene-steps">
+          <div class="hygiene-step">
+            <div class="hygiene-step-num">1</div>
+            <div class="hygiene-step-text"><strong>예비 세척</strong> — 잔여 음식물 완전 제거 및 초기 헹굼</div>
+          </div>
+          <div class="hygiene-step">
+            <div class="hygiene-step-num">2</div>
+            <div class="hygiene-step-text"><strong>고온 세제 세척</strong> — 친환경 세제로 80°C 이상 고온 세척</div>
+          </div>
+          <div class="hygiene-step">
+            <div class="hygiene-step-num">3</div>
+            <div class="hygiene-step-text"><strong>고온 헹굼·소독</strong> — 세제 잔류물 완전 제거 및 열 소독</div>
+          </div>
+          <div class="hygiene-step">
+            <div class="hygiene-step-num">4</div>
+            <div class="hygiene-step-text"><strong>건조·위생 포장</strong> — 완전 건조 후 오염 방지 포장 배송</div>
+          </div>
+        </div>
+      </div>
+      <div class="hygiene-visual">
+        <div class="hygiene-stat">
+          <div class="hygiene-stat-icon">🌡️</div>
+          <div>
+            <div class="hygiene-stat-num">80°C+</div>
+            <div class="hygiene-stat-label">세척 온도 (일반 가정의 2배 이상)</div>
+          </div>
+        </div>
+        <div class="hygiene-stat">
+          <div class="hygiene-stat-icon">🧪</div>
+          <div>
+            <div class="hygiene-stat-num">월 1회</div>
+            <div class="hygiene-stat-label">정기 세균 검사 실시</div>
+          </div>
+        </div>
+        <div class="hygiene-stat">
+          <div class="hygiene-stat-icon">🌿</div>
+          <div>
+            <div class="hygiene-stat-num">100%</div>
+            <div class="hygiene-stat-label">친환경 식품용 세제 사용</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="parents-cta">
+    <h2>아직 서비스를 이용하지 않는 기관이라면?</h2>
+    <p>담당 선생님께 엔앤씨 서비스 도입을 요청하거나, 직접 문의해 주세요.</p>
+    <div class="cta-btns">
+      <a href="../contact/inquiry.html" class="btn-primary">
+        교육기관 도입 문의
+      </a>
+      <a href="tel:010-0000-0000" class="btn-ghost">
+        전화 문의
+      </a>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

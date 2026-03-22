@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>소식 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'cs', activePage: 'news',
+      crumb: '소식', pageEyebrow: 'News',
+      pageTitle: '엔앤씨 <span class="hl">소식</span>',
+      pageDesc: '엔앤씨의 최신 뉴스와 미디어 보도를 확인하세요'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media(max-width: 1024px) { .news-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width: 640px)  { .news-grid { grid-template-columns: 1fr; } }
+
+    .news-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .news-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(26,107,255,0.3);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .news-thumb {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, rgba(26,107,255,0.25) 0%, rgba(2,16,46,0.9) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; position: relative; overflow: hidden;
+    }
+    .news-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(2,10,35,0.6) 100%);
+    }
+    .news-thumb-label {
+      position: absolute; bottom: 12px; left: 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      color: rgba(255,255,255,0.6); font-family: var(--font-en);
+      text-transform: uppercase; z-index: 1;
+    }
+
+    .news-body { padding: 20px; }
+    .news-category {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      color: var(--accent); font-family: var(--font-en);
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .news-title {
+      font-size: 15px; font-weight: 700;
+      color: rgba(255,255,255,0.9); line-height: 1.55;
+      margin-bottom: 10px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .news-card:hover .news-title { color: #fff; }
+    .news-desc {
+      font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .news-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .news-date { font-size: 12px; color: rgba(255,255,255,0.3); font-family: var(--font-en); }
+    .news-source { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+    .news-featured {
+      grid-column: 1 / -1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border-radius: 20px; overflow: hidden;
+    }
+    @media(max-width: 768px) { .news-featured { grid-template-columns: 1fr; } }
+    .news-featured .news-thumb { aspect-ratio: auto; min-height: 260px; font-size: 72px; }
+    .news-featured .news-body {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 36px 32px;
+      background: rgba(26,107,255,0.06);
+    }
+    .news-featured .news-title { font-size: 20px; -webkit-line-clamp: 3; margin-bottom: 14px; }
+    .news-featured .news-desc { -webkit-line-clamp: 3; font-size: 14px; }
+    .featured-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 20px;
+      background: rgba(26,107,255,0.2); border: 1px solid rgba(26,107,255,0.3);
+      font-size: 11px; font-weight: 700; color: var(--blue);
+      letter-spacing: .06em; text-transform: uppercase; font-family: var(--font-en);
+      margin-bottom: 14px; width: fit-content;
+    }
+
+    .sec-label {
+      font-size: 12px; font-weight: 700; letter-spacing: .1em;
+      color: rgba(255,255,255,0.3); text-transform: uppercase;
+      font-family: var(--font-en); margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<main id="page-main">
+
+  <!-- 주요 뉴스 -->
+  <div class="sec-label">Featured</div>
+  <div class="news-grid" style="margin-bottom:40px">
+    <div class="news-card news-featured" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=45'">
+      <div class="news-thumb">
+        📰
+        <span class="news-thumb-label">Media Coverage</span>
+      </div>
+      <div class="news-body">
+        <div class="featured-badge">⭐ 주요 뉴스</div>
+        <div class="news-category">지자체 협약</div>
+        <div class="news-title">안성시, 어린이집 식판 세척비 전액 지원 — 엔앤씨와 공식 협약 체결</div>
+        <div class="news-desc">경기도 안성시가 관내 어린이집을 이용하는 학부모의 식판 세척 비용을 전액 지원하는 사업을 추진하며, 엔앤씨(깔끄미 말끄미)와 공식 협약을 체결했습니다.</div>
+        <div class="news-footer">
+          <span class="news-date">2024.04.20</span>
+          <span class="news-source">경기일보</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 최신 소식 -->
+  <div class="sec-label">Latest News</div>
+  <div class="news-grid">
+
+    <div class="news-card" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=45'">
+      <div class="news-thumb" style="font-size:40px;background:linear-gradient(135deg,rgba(56,191,255,0.2),rgba(2,16,46,0.9))">🚀</div>
+      <div class="news-body">
+        <div class="news-category">Company</div>
+        <div class="news-title">계약 교육기관 30개 돌파 — 지속 성장세 유지</div>
+        <div class="news-desc">서비스 론칭 이후 꾸준한 성장을 이어온 엔앤씨가 계약 교육기관 30개를 돌파했습니다.</div>
+        <div class="news-footer">
+          <span class="news-date">2025.01.05</span>
+          <span class="news-source">자체 발표</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=45'">
+      <div class="news-thumb" style="font-size:40px;background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(2,16,46,0.9))">🌐</div>
+      <div class="news-body">
+        <div class="news-category">Service</div>
+        <div class="news-title">홈페이지 리뉴얼 및 온라인 결제 시스템 도입</div>
+        <div class="news-desc">교육기관이 더 편리하게 서비스를 신청하고 결제할 수 있도록 홈페이지를 전면 개편하였습니다.</div>
+        <div class="news-footer">
+          <span class="news-date">2025.03.01</span>
+          <span class="news-source">자체 발표</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=45'">
+      <div class="news-thumb" style="font-size:40px;background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(2,16,46,0.9))">🏆</div>
+      <div class="news-body">
+        <div class="news-category">Award</div>
+        <div class="news-title">2024 유아교육 혁신 서비스 우수 사례 선정</div>
+        <div class="news-desc">식판 구독 세척 서비스의 혁신성과 사회적 가치를 인정받아 우수 사례로 선정되었습니다.</div>
+        <div class="news-footer">
+          <span class="news-date">2024.11.10</span>
+          <span class="news-source">교육부</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=45'">
+      <div class="news-thumb" style="font-size:40px;background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(2,16,46,0.9))">📊</div>
+      <div class="news-body">
+        <div class="news-category">Business</div>
+        <div class="news-title">지자체 협약 확대 — 수도권 2개 지역 추가 협의 중</div>
+        <div class="news-desc">안성시에 이어 수도권 내 추가 지자체와의 협약 체결을 위한 협의가 진행 중입니다.</div>
+        <div class="news-footer">
+          <span class="news-date">2024.09.15</span>
+          <span class="news-source">자체 발표</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=45'">
+      <div class="news-thumb" style="font-size:40px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(2,16,46,0.9))">❤️</div>
+      <div class="news-body">
+        <div class="news-category">CSR</div>
+        <div class="news-title">사회적 기업 인증 취득 추진 — ESG 경영 강화</div>
+        <div class="news-desc">아이들의 위생과 학부모 부담 경감이라는 사회적 가치 실현을 위해 사회적 기업 인증을 추진합니다.</div>
+        <div class="news-footer">
+          <span class="news-date">2024.07.20</span>
+          <span class="news-source">자체 발표</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" onclick="location.href='https://nncplus.com/bbs/list.php?boardid=45'">
+      <div class="news-thumb" style="font-size:40px;background:linear-gradient(135deg,rgba(20,184,166,0.2),rgba(2,16,46,0.9))">🤝</div>
+      <div class="news-body">
+        <div class="news-category">Partnership</div>
+        <div class="news-title">전국 어린이집 연합회와 업무 협약 체결</div>
+        <div class="news-desc">전국 어린이집 연합회와의 협약을 통해 서비스 확산과 회원 기관 혜택 제공을 위한 파트너십을 구축했습니다.</div>
+        <div class="news-footer">
+          <span class="news-date">2024.05.30</span>
+          <span class="news-source">자체 발표</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+</body>
+</html>
