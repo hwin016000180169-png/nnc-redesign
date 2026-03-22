@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>사업영역 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'company', activePage: 'business',
+      crumb: '사업영역', pageEyebrow: 'Business Area',
+      pageTitle: '사업<span class="hl">영역</span>',
+      pageDesc: '엔앤씨가 만들어가는 위생 인프라 서비스를 소개합니다'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    .sec-label {
+      font-size: 11px; font-weight: 800; letter-spacing: .14em;
+      color: var(--accent); text-transform: uppercase;
+      font-family: var(--font-en); margin-bottom: 20px;
+    }
+
+    /* 서비스 카드 그리드 */
+    .biz-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-bottom: 80px; }
+    @media(max-width:860px){ .biz-grid{ grid-template-columns:1fr; max-width:480px; margin-left:auto; margin-right:auto; } }
+
+    .biz-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      overflow: hidden;
+      transition: border-color .25s, transform .25s;
+    }
+    .biz-card:hover { border-color: var(--blue); transform: translateY(-5px); }
+    .biz-card.live { border-color: rgba(26,107,255,0.35); }
+
+    .biz-img {
+      width: 100%; aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+    .biz-img-ph {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, rgba(26,107,255,0.2), rgba(2,16,46,0.8));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px;
+    }
+    .biz-body { padding: 28px 26px; }
+    .biz-status {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+      font-family: var(--font-en); letter-spacing: .06em;
+      margin-bottom: 14px;
+    }
+    .biz-status.live    { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+    .biz-status.soon    { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.1); }
+    .biz-name  { font-size: 18px; font-weight: 700; margin-bottom: 10px; line-height: 1.4; }
+    .biz-desc  { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 20px; }
+    .biz-features { display: flex; flex-direction: column; gap: 8px; }
+    .biz-feat  { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.65); }
+    .biz-feat svg { width: 15px; height: 15px; color: var(--green); flex-shrink: 0; }
+    .biz-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 22px; font-size: 13px; font-weight: 700;
+      color: var(--accent); transition: gap .2s;
+    }
+    .biz-link:hover { gap: 10px; }
+    .biz-link svg { width: 14px; height: 14px; }
+    .biz-muted { margin-top: 22px; font-size: 13px; color: rgba(255,255,255,0.25); }
+
+    /* 서비스 프로세스 */
+    .process-wrap {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 48px 40px;
+      margin-bottom: 80px;
+    }
+    @media(max-width:640px){ .process-wrap{ padding:32px 20px; } }
+    .process-title { font-size: 22px; font-weight: 700; margin-bottom: 40px; letter-spacing: -.02em; }
+    .process-steps {
+      display: flex; align-items: center;
+      gap: 0; overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .process-step {
+      flex: 1; min-width: 130px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 12px;
+      text-align: center;
+    }
+    .step-circle {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(26,107,255,0.15);
+      border: 2px solid rgba(26,107,255,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      position: absolute; top: -6px; right: -6px;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--blue);
+      font-size: 10px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-en);
+    }
+    .step-name  { font-size: 14px; font-weight: 700; }
+    .step-sub   { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.5; }
+    .step-arrow {
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, rgba(26,107,255,0.5), rgba(26,107,255,0.2));
+      flex-shrink: 0; position: relative;
+    }
+    .step-arrow::after {
+      content: '';
+      position: absolute; right: -4px; top: -4px;
+      border: 4px solid transparent;
+      border-left-color: rgba(26,107,255,0.5);
+    }
+
+    /* 타겟 고객 */
+    .target-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+    @media(max-width:640px){ .target-grid{ grid-template-columns:1fr; } }
+    .target-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 24px 22px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .target-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      border-radius: 12px;
+      background: rgba(26,107,255,0.12);
+      border: 1px solid rgba(26,107,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .target-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .target-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+    .section-gap { margin-bottom: 64px; }
+  </style>
+</head>
+<body>
+<main id="page-main">
+
+  <!-- 서비스 카드 -->
+  <div class="sec-label">Our Services</div>
+  <div class="biz-grid">
+
+    <div class="biz-card live">
+      <img src="https://nncplus.com/data/banner/jCygUcXXyy23q24ypAVDNVqmkc3alx.jpg" alt="키즈식판렌탈" class="biz-img">
+      <div class="biz-body">
+        <div class="biz-status live">● LIVE</div>
+        <div class="biz-name">키즈식판렌탈 및<br>세척구독서비스</div>
+        <div class="biz-desc">어린이집·유치원 아이들의 식판을 수거, 전문 세척 후 배송하는 완벽한 구독 서비스입니다.</div>
+        <div class="biz-features">
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>정기 수거 및 배송 (주 2~5회)</div>
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>고온 세척 + UV 소독</div>
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>지자체 지원 연계 가능</div>
+        </div>
+        <a href="../payment.html" class="biz-link">
+          서비스 신청하기
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="biz-card">
+      <div class="biz-img-ph">🍽️</div>
+      <div class="biz-body">
+        <div class="biz-status soon">COMING SOON</div>
+        <div class="biz-name">성인식판렌탈 및<br>세척서비스</div>
+        <div class="biz-desc">구내식당·사원식당 등 기업 단체급식 시설을 위한 식기 렌탈 및 세척 서비스입니다.</div>
+        <div class="biz-features">
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>대용량 식기 처리 가능</div>
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>맞춤형 수거 스케줄</div>
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>식품위생법 기준 준수</div>
+        </div>
+        <div class="biz-muted">준비 중입니다. 서비스 오픈 시 안내드리겠습니다.</div>
+      </div>
+    </div>
+
+    <div class="biz-card">
+      <div class="biz-img-ph">♻️</div>
+      <div class="biz-body">
+        <div class="biz-status soon">COMING SOON</div>
+        <div class="biz-name">다회용기렌탈 및<br>세척서비스</div>
+        <div class="biz-desc">축제·행사·배달 등에서 발생하는 일회용기를 대체하는 친환경 다회용기 순환 서비스입니다.</div>
+        <div class="biz-features">
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>탄소 절감 친환경 모델</div>
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>행사·배달 맞춤 대여</div>
+          <div class="biz-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>완전 세척 후 순환 반납</div>
+        </div>
+        <div class="biz-muted">준비 중입니다. 서비스 오픈 시 안내드리겠습니다.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 서비스 프로세스 -->
+  <div class="process-wrap section-gap">
+    <div class="sec-label">Service Process</div>
+    <div class="process-title">깔끄미 말끄미 완벽 순환 시스템</div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-circle">🏫<span class="step-num">1</span></div>
+        <div class="step-name">교육기관</div>
+        <div class="step-sub">식판 사용 후<br>수거 요청</div>
+      </div>
+      <div class="step-arrow"></div>
+      <div class="process-step">
+        <div class="step-circle">🚚<span class="step-num">2</span></div>
+        <div class="step-name">수거</div>
+        <div class="step-sub">전담 팀이<br>정기 방문 수거</div>
+      </div>
+      <div class="step-arrow"></div>
+      <div class="process-step">
+        <div class="step-circle">🧼<span class="step-num">3</span></div>
+        <div class="step-name">전문 세척</div>
+        <div class="step-sub">고온 세척 +<br>UV 소독 처리</div>
+      </div>
+      <div class="step-arrow"></div>
+      <div class="process-step">
+        <div class="step-circle">✅<span class="step-num">4</span></div>
+        <div class="step-name">품질 검수</div>
+        <div class="step-sub">위생 기준<br>최종 확인</div>
+      </div>
+      <div class="step-arrow"></div>
+      <div class="process-step">
+        <div class="step-circle">📦<span class="step-num">5</span></div>
+        <div class="step-name">배송</div>
+        <div class="step-sub">깨끗한 식판<br>교육기관 복귀</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 주요 고객 -->
+  <div class="sec-label">Target Customers</div>
+  <div class="target-grid">
+    <div class="target-card">
+      <div class="target-icon">🏫</div>
+      <div>
+        <div class="target-name">어린이집 · 유치원</div>
+        <div class="target-desc">가정 어린이집부터 대형 국공립 어린이집까지, 규모에 맞는 맞춤형 구독 플랜 제공</div>
+      </div>
+    </div>
+    <div class="target-card">
+      <div class="target-icon">🏛️</div>
+      <div>
+        <div class="target-name">지방자치단체</div>
+        <div class="target-desc">학부모 식판 세척 비용 지원사업과 연계한 공공 위생 인프라 파트너</div>
+      </div>
+    </div>
+    <div class="target-card">
+      <div class="target-icon">🏢</div>
+      <div>
+        <div class="target-name">기업 구내식당 (준비중)</div>
+        <div class="target-desc">사원 식당 식기 렌탈 및 정기 세척 서비스로 위생 관리 비용 절감</div>
+      </div>
+    </div>
+    <div class="target-card">
+      <div class="target-icon">🎪</div>
+      <div>
+        <div class="target-name">행사 · 축제 (준비중)</div>
+        <div class="target-desc">일회용기를 대체하는 다회용기 렌탈로 친환경 행사 운영 지원</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

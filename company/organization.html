@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>조직도 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'company', activePage: 'organization',
+      crumb: '조직도', pageEyebrow: 'Organization',
+      pageTitle: '조직<span class="hl">구조</span>',
+      pageDesc: '엔앤씨의 조직 구성을 소개합니다'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    .org-wrap { max-width: 860px; margin: 0 auto; }
+
+    /* CEO */
+    .org-top { display: flex; justify-content: center; margin-bottom: 0; }
+    .org-ceo {
+      background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+      border-radius: 18px;
+      padding: 22px 40px;
+      text-align: center;
+      min-width: 200px;
+      box-shadow: 0 8px 32px rgba(26,107,255,0.35);
+      position: relative;
+    }
+    .org-ceo::after {
+      content: '';
+      position: absolute;
+      bottom: -32px; left: 50%;
+      transform: translateX(-50%);
+      width: 2px; height: 32px;
+      background: rgba(26,107,255,0.4);
+    }
+    .org-role  { font-size: 11px; font-weight: 700; letter-spacing: .12em; color: rgba(255,255,255,0.6); font-family: var(--font-en); text-transform: uppercase; margin-bottom: 6px; }
+    .org-name  { font-size: 20px; font-weight: 900; letter-spacing: -.02em; }
+    .org-title { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+
+    /* 연결선 수평 */
+    .org-h-line {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      height: 32px;
+      align-items: flex-end;
+    }
+    .org-h-bar {
+      width: 60%;
+      height: 2px;
+      background: rgba(26,107,255,0.3);
+      position: relative;
+    }
+    .org-h-bar::before, .org-h-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 2px; height: 32px;
+      background: rgba(26,107,255,0.3);
+    }
+    .org-h-bar::before { left: 0; }
+    .org-h-bar::after  { right: 0; }
+
+    /* 부서 그리드 */
+    .org-depts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    @media(max-width:640px){ .org-depts{ grid-template-columns:1fr; gap:16px; } }
+
+    .dept-col { display: flex; flex-direction: column; gap: 12px; }
+
+    .dept-head {
+      background: rgba(26,107,255,0.12);
+      border: 1px solid rgba(26,107,255,0.25);
+      border-radius: 14px;
+      padding: 18px 20px;
+      text-align: center;
+      position: relative;
+    }
+    .dept-head::before {
+      content: '';
+      position: absolute;
+      top: -32px; left: 50%;
+      transform: translateX(-50%);
+      width: 2px; height: 32px;
+      background: rgba(26,107,255,0.3);
+    }
+    @media(max-width:640px){ .dept-head::before{ display:none; } }
+
+    .dept-icon  { font-size: 24px; margin-bottom: 8px; }
+    .dept-name  { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .dept-en    { font-size: 10px; font-weight: 700; letter-spacing: .1em; color: var(--accent); font-family: var(--font-en); text-transform: uppercase; }
+
+    .dept-teams { display: flex; flex-direction: column; gap: 8px; }
+    .dept-team {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .team-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+    .team-name { font-size: 13px; font-weight: 600; }
+    .team-desc { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+
+    /* 인원 현황 */
+    .headcount-row {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-top: 48px;
+    }
+    @media(max-width:560px){ .headcount-row{ grid-template-columns:repeat(2,1fr); } }
+    .hc-box {
+      background: rgba(255,255,255,0.03);
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .hc-num { font-size: 32px; font-weight: 900; font-family: var(--font-en); }
+    .hc-num span { font-size: 16px; color: var(--accent); }
+    .hc-lbl { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 6px; }
+  </style>
+</head>
+<body>
+<main id="page-main">
+  <div class="org-wrap">
+
+    <!-- CEO -->
+    <div class="org-top">
+      <div class="org-ceo">
+        <div class="org-role">Representative Director</div>
+        <div class="org-name">소지선 대표이사</div>
+        <div class="org-title">주식회사 엔앤씨</div>
+      </div>
+    </div>
+
+    <!-- 수평 연결선 -->
+    <div class="org-h-line">
+      <div class="org-h-bar"></div>
+    </div>
+
+    <!-- 3개 부서 -->
+    <div class="org-depts">
+
+      <div class="dept-col">
+        <div class="dept-head">
+          <div class="dept-icon">🚛</div>
+          <div class="dept-name">운영사업부</div>
+          <div class="dept-en">Operations</div>
+        </div>
+        <div class="dept-teams">
+          <div class="dept-team">
+            <div class="team-dot"></div>
+            <div>
+              <div class="team-name">세척운영팀</div>
+              <div class="team-desc">고온 세척·소독·품질관리</div>
+            </div>
+          </div>
+          <div class="dept-team">
+            <div class="team-dot"></div>
+            <div>
+              <div class="team-name">물류수거팀</div>
+              <div class="team-desc">수거·배송·일정관리</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dept-col">
+        <div class="dept-head">
+          <div class="dept-icon">📢</div>
+          <div class="dept-name">영업기획부</div>
+          <div class="dept-en">Sales & Planning</div>
+        </div>
+        <div class="dept-teams">
+          <div class="dept-team">
+            <div class="team-dot"></div>
+            <div>
+              <div class="team-name">영업팀</div>
+              <div class="team-desc">교육기관 계약·지자체 협약</div>
+            </div>
+          </div>
+          <div class="dept-team">
+            <div class="team-dot"></div>
+            <div>
+              <div class="team-name">마케팅팀</div>
+              <div class="team-desc">브랜드·온라인마케팅</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dept-col">
+        <div class="dept-head">
+          <div class="dept-icon">🤝</div>
+          <div class="dept-name">고객서비스부</div>
+          <div class="dept-en">Customer Service</div>
+        </div>
+        <div class="dept-teams">
+          <div class="dept-team">
+            <div class="team-dot"></div>
+            <div>
+              <div class="team-name">CS팀</div>
+              <div class="team-desc">고객 상담·불만처리</div>
+            </div>
+          </div>
+          <div class="dept-team">
+            <div class="team-dot"></div>
+            <div>
+              <div class="team-name">경영지원팀</div>
+              <div class="team-desc">회계·인사·법무</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 인원 현황 -->
+    <div class="headcount-row">
+      <div class="hc-box">
+        <div class="hc-num">3<span>개</span></div>
+        <div class="hc-lbl">사업 부서</div>
+      </div>
+      <div class="hc-box">
+        <div class="hc-num">6<span>개</span></div>
+        <div class="hc-lbl">전문 팀</div>
+      </div>
+      <div class="hc-box">
+        <div class="hc-num">365<span>일</span></div>
+        <div class="hc-lbl">연중 운영</div>
+      </div>
+      <div class="hc-box">
+        <div class="hc-num">30<span>+</span></div>
+        <div class="hc-lbl">계약 기관</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+</body>
+</html>

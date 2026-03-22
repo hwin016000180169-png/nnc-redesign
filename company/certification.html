@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>특허 및 인증현황 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'company', activePage: 'certification',
+      crumb: '특허 및 인증현황', pageEyebrow: 'Patents & Certifications',
+      pageTitle: '특허 및 <span class="hl">인증현황</span>',
+      pageDesc: '엔앤씨가 보유한 특허 및 인증 현황을 소개합니다'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    .sec-label {
+      font-size: 11px; font-weight: 800; letter-spacing: .14em;
+      color: var(--accent); text-transform: uppercase;
+      font-family: var(--font-en); margin-bottom: 24px;
+    }
+    .sec-gap { margin-bottom: 64px; }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 64px;
+    }
+    @media(max-width: 860px) { .cert-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width: 520px)  { .cert-grid { grid-template-columns: 1fr; } }
+
+    .cert-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: border-color .25s, transform .25s;
+    }
+    .cert-card:hover { border-color: rgba(26,107,255,0.4); transform: translateY(-4px); }
+
+    .cert-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: rgba(26,107,255,0.12);
+      border: 1px solid rgba(26,107,255,0.22);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+    }
+    .cert-type {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      color: var(--accent); font-family: var(--font-en); text-transform: uppercase;
+    }
+    .cert-name  { font-size: 16px; font-weight: 700; line-height: 1.4; }
+    .cert-issuer { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .cert-date   { font-size: 12px; color: rgba(255,255,255,0.3); font-family: var(--font-en); }
+    .cert-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.25);
+      color: #4ade80;
+      width: fit-content;
+    }
+
+    /* 사업자 등록 정보 */
+    .biz-info-card {
+      background: rgba(26,107,255,0.08);
+      border: 1px solid rgba(26,107,255,0.2);
+      border-radius: 20px;
+      padding: 36px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media(max-width:600px){ .biz-info-card{ grid-template-columns:1fr; } }
+    .biz-info-item {}
+    .biz-info-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 6px; font-weight: 600; }
+    .biz-info-value { font-size: 16px; font-weight: 700; }
+    .biz-info-value.accent { color: var(--accent); }
+  </style>
+</head>
+<body>
+<main id="page-main">
+
+  <!-- 인증 -->
+  <div class="sec-label">Certifications</div>
+  <div class="cert-grid">
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap">🏅</div>
+      <div class="cert-type">Business Registration</div>
+      <div class="cert-name">통신판매업 신고</div>
+      <div class="cert-issuer">경기도 용인시처인구청</div>
+      <div class="cert-date">2024.08</div>
+      <div class="cert-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+        등록 완료
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap">🏢</div>
+      <div class="cert-type">Corporate Registration</div>
+      <div class="cert-name">사업자 등록증</div>
+      <div class="cert-issuer">국세청</div>
+      <div class="cert-date">2022.11</div>
+      <div class="cert-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+        등록 완료
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap">🛡️</div>
+      <div class="cert-type">Escrow</div>
+      <div class="cert-name">에스크로 가입</div>
+      <div class="cert-issuer">결제 보호 서비스</div>
+      <div class="cert-date">2024</div>
+      <div class="cert-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+        가입 완료
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap">🌱</div>
+      <div class="cert-type">Government Partnership</div>
+      <div class="cert-name">안성시 지자체 협약</div>
+      <div class="cert-issuer">경기도 안성시</div>
+      <div class="cert-date">2024.04</div>
+      <div class="cert-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+        협약 체결
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon-wrap">🧼</div>
+      <div class="cert-type">Hygiene Standard</div>
+      <div class="cert-name">식품위생법 기준 준수</div>
+      <div class="cert-issuer">식품의약품안전처 기준</div>
+      <div class="cert-date">운영 기준</div>
+      <div class="cert-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+        준수 확인
+      </div>
+    </div>
+
+    <div class="cert-card" style="border-style:dashed; opacity:.6;">
+      <div class="cert-icon-wrap" style="opacity:.5;">📋</div>
+      <div class="cert-type">In Progress</div>
+      <div class="cert-name">추가 인증 취득 예정</div>
+      <div class="cert-issuer">순차적으로 업데이트됩니다</div>
+      <div class="cert-date">2025~</div>
+    </div>
+
+  </div>
+
+  <!-- 사업자 정보 -->
+  <div class="sec-label">Business Information</div>
+  <div class="biz-info-card">
+    <div class="biz-info-item">
+      <div class="biz-info-label">회사명</div>
+      <div class="biz-info-value">주식회사 엔앤씨 (N&amp;C Inc.)</div>
+    </div>
+    <div class="biz-info-item">
+      <div class="biz-info-label">사업자등록번호</div>
+      <div class="biz-info-value accent">894-81-03435</div>
+    </div>
+    <div class="biz-info-item">
+      <div class="biz-info-label">통신판매업신고번호</div>
+      <div class="biz-info-value">제2024-용인처인-3143호</div>
+    </div>
+    <div class="biz-info-item">
+      <div class="biz-info-label">대표이사</div>
+      <div class="biz-info-value">소지선</div>
+    </div>
+    <div class="biz-info-item">
+      <div class="biz-info-label">소재지</div>
+      <div class="biz-info-value" style="font-size:14px;">경기도 용인시 처인구 모현읍 독점로 152, 1층</div>
+    </div>
+    <div class="biz-info-item">
+      <div class="biz-info-label">설립연도</div>
+      <div class="biz-info-value">2022년 11월</div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

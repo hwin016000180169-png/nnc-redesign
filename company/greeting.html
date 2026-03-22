@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대표인사말 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'company', activePage: 'greeting',
+      crumb: '대표인사말', pageEyebrow: "CEO's Greeting",
+      pageTitle: '대표<span class="hl">인사말</span>',
+      pageDesc: '엔앤씨 대표이사의 인사말씀입니다'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    .greeting-wrap {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    @media(max-width: 768px) { .greeting-wrap { grid-template-columns: 1fr; gap: 40px; } }
+
+    .ceo-card {
+      position: sticky;
+      top: 100px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .ceo-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(160deg, rgba(26,107,255,0.3) 0%, rgba(2,16,46,0.8) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+    }
+    .ceo-info { padding: 20px; }
+    .ceo-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; color: var(--accent); font-family: var(--font-en); text-transform: uppercase; margin-bottom: 6px; }
+    .ceo-name  { font-size: 22px; font-weight: 900; letter-spacing: -.02em; }
+    .ceo-role  { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+    .greeting-body {}
+    .greeting-lead {
+      font-size: clamp(18px, 2vw, 24px);
+      font-weight: 700;
+      line-height: 1.55;
+      letter-spacing: -.02em;
+      margin-bottom: 36px;
+      color: rgba(255,255,255,0.95);
+    }
+    .greeting-lead .hl {
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .greeting-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      line-height: 2.1;
+      word-break: keep-all;
+    }
+    .greeting-text p + p { margin-top: 24px; }
+
+    .greeting-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 40px 0;
+    }
+
+    .greeting-highlight {
+      background: rgba(26,107,255,0.08);
+      border-left: 3px solid var(--blue);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+      font-style: italic;
+      margin: 36px 0;
+    }
+
+    .signature-wrap {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .signature-text { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+    .signature-name { font-size: 22px; font-weight: 900; color: #fff; margin-top: 4px; letter-spacing: -.02em; }
+    .signature-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(26,107,255,0.15);
+      border: 1px solid rgba(26,107,255,0.25);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+<main id="page-main">
+  <div class="greeting-wrap">
+
+    <!-- CEO 카드 -->
+    <div class="ceo-card">
+      <div class="ceo-photo">👩‍💼</div>
+      <div class="ceo-info">
+        <div class="ceo-title">Representative Director</div>
+        <div class="ceo-name">소지선</div>
+        <div class="ceo-role">주식회사 엔앤씨 대표이사</div>
+      </div>
+    </div>
+
+    <!-- 인사말 본문 -->
+    <div class="greeting-body">
+      <div class="greeting-lead">
+        안녕하십니까,<br>
+        주식회사 엔앤씨 대표이사 <span class="hl">소지선</span>입니다.
+      </div>
+
+      <div class="greeting-text">
+        <p>
+          엔앤씨 홈페이지를 방문해주신 모든 분들께 진심으로 감사드립니다.
+        </p>
+        <p>
+          저희 엔앤씨는 "설거지 없는 세상을 설계합니다"라는 미션 아래,
+          어린이집과 유치원 등 교육기관을 위한 식판 렌탈 및 전문 세척 구독서비스를 운영하고 있습니다.
+          아이들이 매일 사용하는 식판의 위생은 단순한 편의를 넘어,
+          건강하게 성장하는 우리 아이들을 위한 가장 기본적인 책임이라 생각합니다.
+        </p>
+
+        <div class="greeting-highlight">
+          "세척되지 않은 식판은 집으로 가지 않습니다. 우리 아이들의 가방은 항상 깨끗하게 유지됩니다."
+        </div>
+
+        <p>
+          엔앤씨는 교육기관에서 수거한 식판을 전문 인프라로 고온 세척 및 소독 처리한 후
+          깨끗한 상태로 다시 배송하는 완벽한 순환 시스템을 운영합니다.
+          이를 통해 학부모님은 식판 세척 부담에서 완전히 자유로워지고,
+          선생님들은 교육에만 집중하실 수 있습니다.
+        </p>
+        <p>
+          경기도 안성시를 비롯한 지방자치단체가 학부모 식판 세척 비용을 전액 지원하는
+          검증된 사업 모델로, 현재 30개 이상의 교육기관과 함께하고 있습니다.
+          앞으로도 더 많은 지역에서 더 많은 아이들에게 깨끗하고 안전한 식판 서비스를
+          제공할 수 있도록 최선을 다하겠습니다.
+        </p>
+        <p>
+          엔앤씨는 365일 쉬지 않고, 항상 여러분 곁에서 함께하겠습니다.<br>
+          감사합니다.
+        </p>
+      </div>
+
+      <div class="signature-wrap">
+        <div>
+          <div class="signature-text">주식회사 엔앤씨 대표이사</div>
+          <div class="signature-name">소지선</div>
+          <div class="signature-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            깔끄미 말끄미 운영
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+</body>
+</html>

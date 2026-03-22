@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>연혁 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'company', activePage: 'history',
+      crumb: '연혁', pageEyebrow: 'History',
+      pageTitle: '회사<span class="hl">연혁</span>',
+      pageDesc: '엔앤씨의 성장 발자취를 소개합니다'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    .timeline { position: relative; max-width: 760px; margin: 0 auto; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 120px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue), rgba(26,107,255,0.1));
+    }
+    @media(max-width: 560px) {
+      .timeline::before { left: 0; }
+    }
+
+    .tl-year-group { margin-bottom: 60px; }
+
+    .tl-year-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 32px;
+    }
+    .tl-year {
+      width: 120px;
+      font-size: 32px;
+      font-weight: 900;
+      font-family: var(--font-en);
+      color: var(--blue);
+      letter-spacing: -.04em;
+      flex-shrink: 0;
+    }
+    .tl-year-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(26,107,255,0.2);
+    }
+    @media(max-width: 560px) {
+      .tl-year { width: auto; margin-right: 16px; font-size: 24px; }
+    }
+
+    .tl-items { padding-left: 136px; display: flex; flex-direction: column; gap: 20px; }
+    @media(max-width: 560px) { .tl-items { padding-left: 16px; } }
+
+    .tl-item {
+      position: relative;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 20px 24px;
+      transition: border-color .25s, transform .25s;
+    }
+    .tl-item:hover { border-color: rgba(26,107,255,0.4); transform: translateX(4px); }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 12px rgba(26,107,255,0.6);
+    }
+    @media(max-width: 560px) { .tl-item::before { display: none; } }
+
+    .tl-item.highlight {
+      background: rgba(26,107,255,0.1);
+      border-color: rgba(26,107,255,0.3);
+    }
+    .tl-item.highlight::before { background: var(--accent); box-shadow: 0 0 16px rgba(56,191,255,0.7); }
+
+    .tl-month {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      color: var(--accent); font-family: var(--font-en);
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .tl-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .tl-desc  { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+    .tl-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(56,191,255,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56,191,255,0.3);
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+<main id="page-main">
+  <div class="timeline">
+
+    <!-- 2025 -->
+    <div class="tl-year-group">
+      <div class="tl-year-header">
+        <div class="tl-year">2025</div>
+        <div class="tl-year-line"></div>
+      </div>
+      <div class="tl-items">
+        <div class="tl-item highlight">
+          <div class="tl-month">Jan</div>
+          <div class="tl-title">계약 교육기관 30개 돌파 <span class="tl-badge">달성</span></div>
+          <div class="tl-desc">경기도 전역 30개 이상의 어린이집·유치원과 계약 체결</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-month">Mar</div>
+          <div class="tl-title">홈페이지 리뉴얼 오픈</div>
+          <div class="tl-desc">온라인 서비스 신청 및 결제 시스템 도입, 새로운 브랜드 아이덴티티 적용</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2024 -->
+    <div class="tl-year-group">
+      <div class="tl-year-header">
+        <div class="tl-year">2024</div>
+        <div class="tl-year-line"></div>
+      </div>
+      <div class="tl-items">
+        <div class="tl-item highlight">
+          <div class="tl-month">Apr</div>
+          <div class="tl-title">경기도 안성시 지자체 협약 체결 <span class="tl-badge">주요</span></div>
+          <div class="tl-desc">안성시 학부모 식판 세척 비용 전액 지원사업 선정 — 공공 인프라로 공식 인정</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-month">Aug</div>
+          <div class="tl-title">통신판매업 신고 완료</div>
+          <div class="tl-desc">제2024-용인처인-3143호 통신판매업 등록 및 온라인 서비스 기반 구축</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-month">Nov</div>
+          <div class="tl-title">계약 교육기관 20개 돌파</div>
+          <div class="tl-desc">경기도 내 어린이집·유치원 고객사 확대, 월 세척량 대폭 증가</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2023 -->
+    <div class="tl-year-group">
+      <div class="tl-year-header">
+        <div class="tl-year">2023</div>
+        <div class="tl-year-line"></div>
+      </div>
+      <div class="tl-items">
+        <div class="tl-item">
+          <div class="tl-month">Mar</div>
+          <div class="tl-title">첫 서비스 계약 체결</div>
+          <div class="tl-desc">경기도 처인구 소재 어린이집과 첫 번째 식판 세척 구독 계약 체결</div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-month">Jun</div>
+          <div class="tl-title">깔끄미 말끄미 구독 서비스 정식 런칭 <span class="tl-badge">주요</span></div>
+          <div class="tl-desc">식판 수거 → 전문 세척 → 배송의 완벽한 순환 구독 모델 정식 운영 개시</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-month">Nov</div>
+          <div class="tl-title">계약 교육기관 10개 돌파</div>
+          <div class="tl-desc">6개월 만에 계약 기관 10곳 달성, 고객 만족도 99% 기록</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2022 -->
+    <div class="tl-year-group">
+      <div class="tl-year-header">
+        <div class="tl-year">2022</div>
+        <div class="tl-year-line"></div>
+      </div>
+      <div class="tl-items">
+        <div class="tl-item highlight">
+          <div class="tl-month">Nov</div>
+          <div class="tl-title">주식회사 엔앤씨 법인 설립 <span class="tl-badge">창립</span></div>
+          <div class="tl-desc">경기도 용인시 처인구에 법인 설립 — "설거지 없는 세상을 설계합니다" 비전 수립</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+</body>
+</html>
