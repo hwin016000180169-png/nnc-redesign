@@ -66,6 +66,7 @@
     '#gnb{display:flex;align-items:center;height:100%;gap:0}',
     '.gnb-item{position:relative;height:100%;display:flex;align-items:center}',
     '.gnb-link{display:flex;align-items:center;height:100%;padding:0 18px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.75);white-space:nowrap;transition:color .2s;letter-spacing:-.01em}',
+    '.gnb-items{display:contents}',
     '.gnb-footer{display:none}',
     '.gnb-link:hover,.gnb-link.active{color:#fff}',
     '.gnb-item::after{content:"";position:absolute;bottom:0;left:18px;right:18px;height:2px;background:var(--blue);transform:scaleX(0);transition:transform .3s var(--ease-out);border-radius:2px}',
