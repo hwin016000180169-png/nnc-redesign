@@ -86,6 +86,13 @@
       border-radius: 20px; overflow: hidden;
     }
     @media(max-width: 768px) { .news-featured { grid-template-columns: 1fr; } }
+    @media(max-width: 480px) {
+      .news-featured .news-body { padding: 20px 18px; }
+      .news-featured .news-title { font-size: 16px; }
+      .news-grid { gap: 16px; }
+      .news-body { padding: 16px; }
+      .news-title { font-size: 14px; }
+    }
     .news-featured .news-thumb { aspect-ratio: auto; min-height: 260px; font-size: 72px; }
     .news-featured .news-body {
       display: flex; flex-direction: column; justify-content: center;
