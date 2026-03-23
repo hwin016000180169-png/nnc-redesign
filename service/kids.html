@@ -247,8 +247,20 @@
     .svc-cta p { font-size: 15px; color: rgba(255,255,255,0.45); margin-bottom: 32px; word-break:keep-all; }
     .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
 
+    @media(max-width:768px) {
+      .svc-hero { padding: 36px 24px; margin-bottom: 64px; }
+      .hygiene-wrap { padding: 28px 20px; }
+      .proc-step { padding: 24px 14px; }
+      .proc-title { font-size: 13px; }
+      .proc-desc { font-size: 11px; }
+      .plan-grid { max-width: 100%; }
+    }
     @media(max-width:480px) {
       .hero-btns, .cta-btns { flex-direction:column; align-items:stretch; }
+      .feat-grid { gap: 14px; }
+      .feat-card { padding: 24px 18px; }
+      .svc-cta { padding: 40px 20px; }
+      .hsc-num { font-size: 22px; }
     }
   </style>
 </head>
