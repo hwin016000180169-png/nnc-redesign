@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>키즈식판렌탈 서비스 | 엔앤씨</title>
+  <link rel="shortcut icon" href="https://nncplus.com/data/banner/uHkqmmwMDtySDAetmLxUS9JCPSBcPX.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    window.PAGE_CONFIG = {
+      root: '../', activeSection: 'service', activePage: 'kids',
+      crumb: '키즈식판렌탈', pageEyebrow: 'Kids Tray Rental',
+      pageTitle: '키즈식판<span class="hl">렌탈</span> 서비스',
+      pageDesc: '어린이집·유치원을 위한 식판 렌탈 및 전문 세척 서비스'
+    };
+  </script>
+  <script src="../_layout.js"></script>
+  <style>
+    /* ── 히어로 배너 ── */
+    .svc-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(26,107,255,0.1) 0%, rgba(56,191,255,0.05) 100%);
+      border: 1px solid rgba(26,107,255,0.2);
+      border-radius: 24px;
+      padding: 56px 48px;
+      margin-bottom: 80px;
+      overflow: hidden;
+      position: relative;
+    }
+    .svc-hero::before {
+      content: '';
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(56,191,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    @media(max-width:900px) { .svc-hero { grid-template-columns:1fr; padding:40px 28px; gap:32px; } }
+    @media(max-width:480px) { .svc-hero { padding:32px 20px; margin-bottom:56px; } }
+
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 800; letter-spacing: .14em;
+      color: var(--accent); font-family: var(--font-en); text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-label::before { content:''; width:20px; height:1px; background:var(--accent); opacity:.6; }
+    .hero-h1 {
+      font-size: clamp(28px, 4vw, 44px); font-weight: 900;
+      letter-spacing: -.03em; line-height: 1.2; margin-bottom: 18px;
+    }
+    .hero-h1 .hl {
+      background: linear-gradient(135deg,var(--blue),var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .hero-desc {
+      font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.75;
+      margin-bottom: 32px; word-break: keep-all;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 12px;
+      background: var(--blue); color: #fff; font-weight: 700; font-size: 15px;
+      border: none; cursor: pointer; transition: opacity .2s; text-decoration: none;
+    }
+    .btn-primary:hover { opacity:.85; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 12px;
+      background: none; color: rgba(255,255,255,0.7); font-weight: 600; font-size: 15px;
+      border: 1px solid rgba(255,255,255,0.2); text-decoration: none; transition: all .2s;
+    }
+    .btn-ghost:hover { border-color:rgba(255,255,255,0.4); color:#fff; }
+
+    .hero-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    .hero-stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 22px 20px;
+      text-align: center;
+    }
+    .hero-stat-card.accent { border-color: rgba(26,107,255,0.3); background: rgba(26,107,255,0.08); }
+    .hsc-num { font-size: clamp(26px,3vw,36px); font-weight: 900; font-family: var(--font-en); color:#fff; letter-spacing:-.03em; }
+    .hsc-num .unit { font-size: .6em; color: var(--accent); }
+    .hsc-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 6px; word-break:keep-all; }
+
+    /* ── 섹션 공통 ── */
+    .sec-eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: .14em;
+      color: rgba(255,255,255,0.3); text-transform: uppercase;
+      font-family: var(--font-en); margin-bottom: 8px;
+    }
+    .sec-title {
+      font-size: clamp(22px,2.8vw,32px); font-weight: 900;
+      letter-spacing: -.03em; margin-bottom: 40px; line-height:1.25;
+    }
+    .sec-title .hl {
+      background: linear-gradient(135deg,var(--blue),var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .section-block { margin-bottom: 80px; }
+    @media(max-width:768px) { .section-block { margin-bottom:56px; } }
+
+    /* ── 서비스 특징 카드 ── */
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
+    }
+    @media(max-width:900px) { .feat-grid { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:560px) { .feat-grid { grid-template-columns: 1fr; } }
+
+    .feat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; padding: 32px 26px;
+      transition: border-color .2s, transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .feat-card:hover { border-color: rgba(26,107,255,0.3); transform: translateY(-4px); }
+    .feat-card::before {
+      content: attr(data-num);
+      position: absolute; right: 16px; top: 8px;
+      font-size: 64px; font-weight: 900; font-family: var(--font-en);
+      color: rgba(26,107,255,0.06); line-height: 1; pointer-events: none;
+    }
+    .feat-icon {
+      width: 52px; height: 52px; border-radius: 14px; margin-bottom: 20px;
+      background: rgba(26,107,255,0.12); border: 1px solid rgba(26,107,255,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 24px;
+    }
+    .feat-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+    .feat-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.8; word-break:keep-all; }
+
+    /* ── 이용 프로세스 ── */
+    .process-flow {
+      display: grid; grid-template-columns: repeat(5,1fr); gap: 0;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; overflow: hidden;
+    }
+    @media(max-width:900px) {
+      .process-flow { grid-template-columns: 1fr 1fr; }
+      .proc-arrow { display:none; }
+    }
+    @media(max-width:480px) { .process-flow { grid-template-columns: 1fr; } }
+
+    .proc-step {
+      padding: 32px 20px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+    }
+    .proc-step:last-child { border-right: none; }
+    .proc-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--blue); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900; font-family: var(--font-en);
+      margin: 0 auto 16px;
+    }
+    .proc-icon { font-size: 32px; margin-bottom: 12px; }
+    .proc-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .proc-desc { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.7; word-break:keep-all; }
+
+    /* ── 세척 인증 섹션 ── */
+    .hygiene-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+      background: rgba(26,107,255,0.05);
+      border: 1px solid rgba(26,107,255,0.15);
+      border-radius: 24px; padding: 48px;
+    }
+    @media(max-width:860px) { .hygiene-wrap { grid-template-columns:1fr; padding:32px 24px; gap:28px; } }
+
+    .cert-list { display: flex; flex-direction: column; gap: 14px; }
+    .cert-item {
+      display: flex; gap: 14px; align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 16px 20px;
+    }
+    .cert-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink:0;
+      background: rgba(26,107,255,0.15); border: 1px solid rgba(26,107,255,0.25);
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+    .cert-text strong { font-size: 14px; font-weight: 700; display:block; margin-bottom:2px; }
+    .cert-text span { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+    .hygiene-stats { display: flex; flex-direction: column; gap: 14px; }
+    .hyg-stat {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px; border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .hyg-num { font-size: 28px; font-weight: 900; font-family: var(--font-en); color: var(--accent); min-width:80px; }
+    .hyg-label { font-size: 13px; color: rgba(255,255,255,0.55); line-height:1.5; word-break:keep-all; }
+
+    /* ── 요금 안내 ── */
+    .plan-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
+    }
+    @media(max-width:860px) { .plan-grid { grid-template-columns: 1fr; max-width:400px; } }
+
+    .plan-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 32px 26px;
+      position: relative; transition: border-color .2s;
+    }
+    .plan-card.featured {
+      border-color: var(--blue);
+      background: rgba(26,107,255,0.07);
+    }
+    .plan-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--blue); color: #fff;
+      font-size: 11px; font-weight: 800; letter-spacing: .08em;
+      padding: 4px 14px; border-radius: 100px; white-space:nowrap;
+    }
+    .plan-name { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); font-family:var(--font-en); letter-spacing:.1em; margin-bottom:12px; text-transform:uppercase; }
+    .plan-price {
+      font-size: clamp(26px,3.5vw,36px); font-weight: 900; font-family: var(--font-en);
+      letter-spacing: -.03em; margin-bottom: 4px; color: #fff;
+    }
+    .plan-price sub { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.4); }
+    .plan-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
+    .plan-divider { height:1px; background:rgba(255,255,255,0.07); margin-bottom:20px; }
+    .plan-features { display: flex; flex-direction: column; gap: 10px; }
+    .plan-feat { display:flex; gap:10px; align-items:flex-start; font-size:13px; color:rgba(255,255,255,0.6); line-height:1.5; }
+    .plan-feat::before { content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0; margin-top:1px; }
+    .plan-card.featured .plan-feat { color:rgba(255,255,255,0.8); }
+
+    /* ── CTA ── */
+    .svc-cta {
+      text-align: center; padding: 64px 24px;
+      background: linear-gradient(135deg, rgba(26,107,255,0.1), rgba(56,191,255,0.06));
+      border: 1px solid rgba(26,107,255,0.2); border-radius: 24px;
+    }
+    .svc-cta h2 { font-size: clamp(22px,3vw,32px); font-weight: 900; margin-bottom: 12px; letter-spacing:-.03em; }
+    .svc-cta p { font-size: 15px; color: rgba(255,255,255,0.45); margin-bottom: 32px; word-break:keep-all; }
+    .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+    @media(max-width:480px) {
+      .hero-btns, .cta-btns { flex-direction:column; align-items:stretch; }
+    }
+  </style>
+</head>
+<body>
+<main id="page-main">
+
+  <!-- 히어로 -->
+  <div class="svc-hero">
+    <div>
+      <div class="hero-label">Kids Tray Rental</div>
+      <h1 class="hero-h1">아이들을 위한<br>깨끗한 <span class="hl">식판 렌탈</span></h1>
+      <p class="hero-desc">
+        식판 구매 없이 렌탈로 이용하고,<br>
+        세척·소독·배송까지 엔앤씨가 책임집니다.<br>
+        선생님은 교육에, 아이는 건강에 집중하세요.
+      </p>
+      <div class="hero-btns">
+        <a href="../contact/inquiry.html" class="btn-primary">도입 문의하기 →</a>
+        <a href="../payment.html" class="btn-ghost">바로 신청하기</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-stat-card accent">
+        <div class="hsc-num">1,492<span class="unit">+</span></div>
+        <div class="hsc-label">이용 어린이 수</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hsc-num">29<span class="unit">+</span></div>
+        <div class="hsc-label">계약 교육기관</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hsc-num">80<span class="unit">°C</span></div>
+        <div class="hsc-label">고온 세척 온도</div>
+      </div>
+      <div class="hero-stat-card accent">
+        <div class="hsc-num">98<span class="unit">%</span></div>
+        <div class="hsc-label">고객 만족도</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 서비스 특징 -->
+  <div class="section-block">
+    <div class="sec-eyebrow">Features</div>
+    <div class="sec-title">왜 <span class="hl">엔앤씨</span> 식판인가요</div>
+    <div class="feat-grid">
+      <div class="feat-card" data-num="01">
+        <div class="feat-icon">🍽️</div>
+        <div class="feat-title">렌탈 & 세척 일체형</div>
+        <div class="feat-desc">식판 구매 비용 없이 렌탈로 이용. 수거→세척→배송까지 원스톱으로 처리합니다.</div>
+      </div>
+      <div class="feat-card" data-num="02">
+        <div class="feat-icon">🌡️</div>
+        <div class="feat-title">80°C 고온 전문 세척</div>
+        <div class="feat-desc">가정 세척의 2배 이상 온도로 살균. 식약처 기준 친환경 세제만 사용합니다.</div>
+      </div>
+      <div class="feat-card" data-num="03">
+        <div class="feat-icon">🚐</div>
+        <div class="feat-title">정기 수거·배송</div>
+        <div class="feat-desc">약속된 요일에 담당자가 직접 방문. 교육기관은 식판 관리 걱정이 없습니다.</div>
+      </div>
+      <div class="feat-card" data-num="04">
+        <div class="feat-icon">💰</div>
+        <div class="feat-title">지자체 비용 지원</div>
+        <div class="feat-desc">안성시 등 협약 지자체 대상으로 세척 비용 전액 지원. 교육기관 부담 제로.</div>
+      </div>
+      <div class="feat-card" data-num="05">
+        <div class="feat-icon">🛡️</div>
+        <div class="feat-title">위생 인증 완비</div>
+        <div class="feat-desc">HACCP 준용 위생 프로세스. 월 1회 정기 세균 검사로 기준을 철저히 유지합니다.</div>
+      </div>
+      <div class="feat-card" data-num="06">
+        <div class="feat-icon">📋</div>
+        <div class="feat-title">맞춤형 플랜 설계</div>
+        <div class="feat-desc">원아 수와 기관 규모에 따라 최적 플랜을 제안합니다. 계약 전 무료 상담 가능.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이용 프로세스 -->
+  <div class="section-block">
+    <div class="sec-eyebrow">How It Works</div>
+    <div class="sec-title">이용 <span class="hl">프로세스</span></div>
+    <div class="process-flow">
+      <div class="proc-step">
+        <div class="proc-num">1</div>
+        <div class="proc-icon">📞</div>
+        <div class="proc-title">문의 · 상담</div>
+        <div class="proc-desc">전화 또는 온라인 문의 후 담당자 배정</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">2</div>
+        <div class="proc-icon">🏫</div>
+        <div class="proc-title">현장 방문</div>
+        <div class="proc-desc">기관 규모·원아 수 확인 및 플랜 제안</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">3</div>
+        <div class="proc-icon">📝</div>
+        <div class="proc-title">계약 체결</div>
+        <div class="proc-desc">서비스 조건 확정 및 계약 진행</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">4</div>
+        <div class="proc-icon">🍽️</div>
+        <div class="proc-title">식판 배치</div>
+        <div class="proc-desc">렌탈 식판 기관 배치 완료</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">5</div>
+        <div class="proc-icon">♻️</div>
+        <div class="proc-title">정기 운영</div>
+        <div class="proc-desc">수거 → 세척 → 배송 정기 반복</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 세척 인증 -->
+  <div class="section-block">
+    <div class="hygiene-wrap">
+      <div>
+        <div class="sec-eyebrow">Hygiene Standard</div>
+        <div class="sec-title" style="margin-bottom:28px">믿을 수 있는<br><span class="hl">위생 기준</span></div>
+        <div class="cert-list">
+          <div class="cert-item">
+            <div class="cert-icon">✅</div>
+            <div class="cert-text">
+              <strong>식약처 기준 친환경 세제</strong>
+              <span>잔류 화학물질 없는 식품용 세제 100% 사용</span>
+            </div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-icon">🔬</div>
+            <div class="cert-text">
+              <strong>월 1회 정기 세균 검사</strong>
+              <span>외부 기관 검사로 투명하게 위생 수준 공개</span>
+            </div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-icon">♻️</div>
+            <div class="cert-text">
+              <strong>친환경 세척 공정</strong>
+              <span>물 절약 · 세제 최소화 · 지속가능한 운영 방식</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hygiene-stats">
+        <div class="hyg-stat">
+          <div class="hyg-num">80°C+</div>
+          <div class="hyg-label">세척 온도<br>가정 세척의 2배 이상</div>
+        </div>
+        <div class="hyg-stat">
+          <div class="hyg-num">4단계</div>
+          <div class="hyg-label">예비세척 → 고온세척<br>→ 헹굼소독 → 건조포장</div>
+        </div>
+        <div class="hyg-stat">
+          <div class="hyg-num">100%</div>
+          <div class="hyg-label">친환경 식품용 세제<br>잔류물 없음 보장</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 요금 안내 -->
+  <div class="section-block">
+    <div class="sec-eyebrow">Pricing</div>
+    <div class="sec-title">요금 <span class="hl">안내</span></div>
+    <div class="plan-grid">
+      <div class="plan-card">
+        <div class="plan-name">Basic</div>
+        <div class="plan-price">별도 <sub>협의</sub></div>
+        <div class="plan-note">20명 미만 소규모 기관</div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feat">식판 렌탈 제공</div>
+          <div class="plan-feat">주 1회 수거·배송</div>
+          <div class="plan-feat">전문 세척·소독</div>
+          <div class="plan-feat">담당자 배정</div>
+        </div>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">인기 플랜</div>
+        <div class="plan-name">Standard</div>
+        <div class="plan-price">별도 <sub>협의</sub></div>
+        <div class="plan-note">20~100명 규모 기관</div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feat">식판 렌탈 제공</div>
+          <div class="plan-feat">주 2회 수거·배송</div>
+          <div class="plan-feat">전문 세척·소독</div>
+          <div class="plan-feat">정기 위생 점검</div>
+          <div class="plan-feat">지자체 지원 연계</div>
+        </div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">별도 <sub>협의</sub></div>
+        <div class="plan-note">100명 이상 대형 기관</div>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feat">식판 렌탈 제공</div>
+          <div class="plan-feat">맞춤 수거 일정</div>
+          <div class="plan-feat">전문 세척·소독</div>
+          <div class="plan-feat">정기 위생 점검</div>
+          <div class="plan-feat">지자체 지원 연계</div>
+          <div class="plan-feat">전담 매니저 배정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="svc-cta">
+    <h2>지금 바로 도입 상담을 받아보세요</h2>
+    <p>기관 규모에 맞는 최적 플랜을 무료로 제안해 드립니다.<br>지자체 지원 여부도 함께 확인해 드립니다.</p>
+    <div class="cta-btns">
+      <a href="../contact/inquiry.html" class="btn-primary">도입 문의하기 →</a>
+      <a href="tel:15226308" class="btn-ghost">📞 1522-6308</a>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

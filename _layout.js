@@ -261,7 +261,7 @@
           '<a href="' + ROOT + 'payment.html" class="gnb-link ' + sv.lnk + '">서비스 신청</a>' +
           '<ul class="gnb-sub wide">' +
             '<li><a href="' + ROOT + 'payment.html" class="' + sv.sub('payment') + '">온라인 결제 신청</a></li>' +
-            '<li><a href="https://nncplus.com/company/serviceKid1.php">키즈식판렌탈 서비스</a></li>' +
+            '<li><a href="' + ROOT + 'service/kids.html">키즈식판렌탈 서비스</a></li>' +
             '<li><a href="javascript:void(0)" class="coming">성인식판렌탈 서비스</a></li>' +
             '<li><a href="javascript:void(0)" class="coming">다회용기렌탈 서비스</a></li>' +
           '</ul>' +
